@@ -48,7 +48,7 @@
     "react-native-screens": "2.10.1",
     "react-native-tab-view": "2.14.2",
     "react-native-unimodules": "0.11.0",
-    "react-native-webview": "10.7.0",
+    "react-native-webview": "11.0.0",
     "react-navigation": "3.0.9",
     "react-navigation-tabs": "1.0.2"
   },
