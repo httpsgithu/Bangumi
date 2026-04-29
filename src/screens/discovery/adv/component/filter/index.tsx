@@ -9,7 +9,7 @@ import { observer } from 'mobx-react'
 import { Filter as FilterComp } from '@_'
 import { r } from '@utils/dev'
 import { TEXT_UPDATE_GAME } from '@constants'
-import { filterDS } from '../../ds'
+import { FILTER_DS } from '../../ds'
 import { COMPONENT, TEXT_INFORMATION } from './ds'
 
 function Filter() {
@@ -17,7 +17,7 @@ function Filter() {
 
   return (
     <FilterComp
-      filterDS={filterDS}
+      filterDS={FILTER_DS}
       title='频道　'
       name='ADV'
       type='ADV'

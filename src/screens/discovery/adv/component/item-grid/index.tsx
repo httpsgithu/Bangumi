@@ -51,6 +51,7 @@ function ItemGrid({ pickIndex, index }: Props) {
   return (
     <ItemCollectionsGrid
       style={(_.isPad || _.isLandscape) && !(index % columnNum) && styles.left}
+      index={index}
       num={columnNum}
       id={id}
       cover={coverUrl}
@@ -59,6 +60,7 @@ function ItemGrid({ pickIndex, index }: Props) {
       rank={rank}
       airtime={date}
       collection={collectionStatus}
+      offset={Math.floor(_.window.height * 0.4)}
       event={EVENT}
     />
   )

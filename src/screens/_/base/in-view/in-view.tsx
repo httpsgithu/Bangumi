@@ -57,7 +57,6 @@ export default ({ index = 0, y = 0, log, flex, visibleBottom, onLayout, children
 
   const logText: string[] = []
   if (DEV && log) {
-    logText.push(`c:${Math.floor(visibleBottom)}`)
     if (y) {
       logText.push(`y:${Math.floor(y)}`)
     } else {

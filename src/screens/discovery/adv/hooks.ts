@@ -20,6 +20,9 @@ export function useADVPage(props: NavigationProps) {
     {
       onEnterComplete() {
         $.init()
+      },
+      onLeaveComplete() {
+        $.unmount()
       }
     },
     id

@@ -41,13 +41,14 @@ function List() {
     <PaginationList2
       key={`${layout}${numColumns}`}
       forwardRef={$.forwardRef}
+      keyExtractor={keyExtractor}
       contentContainerStyle={_.container.bottom}
       data={$.list}
       limit={9}
       numColumns={numColumns}
       ListHeaderComponent={elFilter}
       renderItem={renderItem}
-      keyExtractor={keyExtractor}
+      onScroll={$.onScroll}
       onPage={$.onPage}
     />
   )

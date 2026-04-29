@@ -9,7 +9,7 @@ import { View } from 'react-native'
 import { observer } from 'mobx-react'
 import { Flex, Heatmap, HorizontalList, Image, Loading, Text, Touchable } from '@components'
 import { getCoverSrc } from '@components/cover/utils'
-import { Cover, Manage, Rank, Stars } from '@_'
+import { Cover, InView, Manage, Rank, Stars } from '@_'
 import { _, collectionStore, otaStore, uiStore } from '@stores'
 import { formatPlaytime, HTMLDecode, showImageViewer, stl, x18 } from '@utils'
 import { t } from '@utils/fetch'
@@ -88,11 +88,15 @@ function Item({ index, pickIndex }: Props) {
     .join(' / ')
 
   const collection = collectionStore.collect(id)
+  const y = InView.y(index, IMG_HEIGHT_LG, _.window.height * 0.4)
 
   return (
     <Touchable style={styles.container} animate onPress={handlePress}>
       <Flex style={styles.wrap} align='start'>
-        <Cover src={image} width={IMG_WIDTH_LG} height={IMG_HEIGHT_LG} radius cdn={!x18(id)} />
+        <InView style={styles.inView} y={y}>
+          <Cover src={image} width={IMG_WIDTH_LG} height={IMG_HEIGHT_LG} radius cdn={!x18(id)} />
+        </InView>
+
         <Flex style={styles.content} direction='column' align='start'>
           <View style={styles.body}>
             <Flex style={_.container.block} align='start'>
@@ -123,7 +127,7 @@ function Item({ index, pickIndex }: Props) {
           </View>
 
           {!!thumbs.length && (
-            <View style={styles.thumbs}>
+            <InView style={styles.thumbs} y={y}>
               <HorizontalList
                 data={thumbs.filter((_, idx) => idx < 3)}
                 renderItem={(item, idx) => (
@@ -163,7 +167,7 @@ function Item({ index, pickIndex }: Props) {
                   ))
                 }
               />
-            </View>
+            </InView>
           )}
         </Flex>
       </Flex>

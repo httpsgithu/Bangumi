@@ -4,6 +4,7 @@
  * @Last Modified by: czy0729
  * @Last Modified time: 2024-07-14 17:30:03
  */
+import { _ } from '@stores'
 import { LIST_EMPTY } from '@constants'
 import { COMPONENT } from '../ds'
 
@@ -11,7 +12,18 @@ import type { Loaded } from '@types'
 
 export const NAMESPACE = `Screen${COMPONENT}` as const
 
+export const RESET_STATE = {
+  /** 可视范围底部 y */
+  visibleBottom: _.window.height
+}
+
+export const EXCLUDE_STATE = {
+  ...RESET_STATE
+}
+
 export const STATE = {
+  ...EXCLUDE_STATE,
+
   query: {
     first: '',
     year: '2024',

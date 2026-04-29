@@ -8,17 +8,17 @@ import React, { useCallback } from 'react'
 import { View } from 'react-native'
 import { observer } from 'mobx-react'
 import { useFocusEffect } from '@react-navigation/native'
-import { _ } from '@stores'
+import { _, useStore } from '@stores'
 import { stl } from '@utils'
-import { r } from '@utils/dev'
-import { IOS } from '@constants'
+import { DEV, IOS } from '@constants'
 import { ErrorBoundary } from '../error-boundary'
 import { Loading } from '../loading'
 import { StatusBar } from '../status-bar'
+import { Text } from '../text'
 import { COMPONENT } from './ds'
 import { styles } from './styles'
 
-import type { Props as PageProps } from './types'
+import type { Ctx, Props as PageProps } from './types'
 export type { PageProps }
 
 /** 页面容器 */
@@ -33,7 +33,7 @@ export const Page = observer(
     statusBarEvent = true,
     ...other
   }: PageProps) => {
-    r(COMPONENT)
+    const { $ } = useStore<Ctx>(COMPONENT)
 
     useFocusEffect(
       useCallback(() => {
@@ -43,12 +43,11 @@ export const Page = observer(
       }, [statusBarEvent])
     )
 
-    const _style = stl(_.container.plain, style)
-
+    const mergeStyle = stl(_.container.plain, style)
     if (loaded || loaded === undefined) {
       return (
-        <ErrorBoundary style={_style}>
-          <View style={_style} {...other}>
+        <ErrorBoundary style={mergeStyle}>
+          <View style={mergeStyle} {...other}>
             {children}
             {!!loading && (
               <View style={styles.loading}>
@@ -56,11 +55,16 @@ export const Page = observer(
               </View>
             )}
           </View>
+          {DEV && 'visibleBottom' in $?.state && (
+            <Text style={styles.visibleBottom} size={8} bold shadow>
+              vb:{$.state.visibleBottom}
+            </Text>
+          )}
         </ErrorBoundary>
       )
     }
 
-    return <Loading style={_style} color={loadingColor} backgroundColor={backgroundColor} />
+    return <Loading style={mergeStyle} color={loadingColor} backgroundColor={backgroundColor} />
   }
 )
 
