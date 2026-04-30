@@ -12,10 +12,10 @@ import { _, useStore } from '@stores'
 import { open } from '@utils'
 import { t } from '@utils/fetch'
 import { TEXT_MENU_BROWSER } from '@constants'
+import { TITLE } from '../ds'
 import { COMPONENT, DATA, HM } from './ds'
 
 import type { Ctx } from '../types'
-
 function Header() {
   const { $ } = useStore<Ctx>(COMPONENT)
 
@@ -50,7 +50,7 @@ function Header() {
     [$]
   )
 
-  return <HeaderV2 title='业界资讯' alias='Anitama' hm={HM} headerRight={handleHeaderRight} />
+  return <HeaderV2 title={TITLE} alias='Anitama' hm={HM} headerRight={handleHeaderRight} />
 }
 
 export default observer(Header)

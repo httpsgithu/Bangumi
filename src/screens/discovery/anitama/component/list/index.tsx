@@ -8,23 +8,26 @@ import React, { useCallback } from 'react'
 import { View } from 'react-native'
 import { observer } from 'mobx-react'
 import { Heatmap, Image, ScrollView, Text, Touchable } from '@components'
-import { computeInViewY, InView } from '@_'
+import { InView } from '@_'
 import { _, useStore } from '@stores'
 import { open } from '@utils'
 import { hm, t } from '@utils/fetch'
+import { TITLE } from '../../ds'
 import { COMPONENT } from './ds'
 import { memoStyles } from './styles'
 
 import type { NewsItem } from '@stores/discovery/types'
 import type { Ctx } from '../../types'
 
-const title = '资讯'
-
 function List() {
   const { $, navigation } = useStore<Ctx>(COMPONENT)
 
+  const styles = memoStyles()
+
+  // --- Data Logic ---
   const { useWebView } = $.state
 
+  // --- Handlers ---
   const handlePress = useCallback(
     (item: NewsItem) => {
       if (useWebView) {
@@ -41,24 +44,21 @@ function List() {
         url: item.url,
         useWebView
       })
-      hm(item.url, title)
+      hm(item.url, TITLE)
     },
     [navigation, useWebView]
   )
 
-  const styles = memoStyles()
-
+  // --- Render ---
   return (
     <ScrollView keyboardDismissMode='on-drag' onScroll={$.onScroll}>
       {$.state.show && (
         <View style={styles.container}>
           {$.article.list.map((item, index) => (
             <Touchable key={item.aid} style={styles.item} animate onPress={() => handlePress(item)}>
-              <Text align='right'>
-                © {[item.author, item.origin].filter(item => !!item).join(' / ')}
-              </Text>
+              <Text align='right'>© {[item.author, item.origin].filter(i => !!i).join(' / ')}</Text>
 
-              <InView style={_.mt.md} y={computeInViewY(index, 280)}>
+              <InView style={_.mt.md} y={InView.y(index, 280)}>
                 <Image
                   src={item.cover.url}
                   headers={item.cover.headers}

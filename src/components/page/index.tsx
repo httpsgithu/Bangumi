@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2022-05-01 14:26:57
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-03-19 02:22:13
+ * @Last Modified time: 2026-04-30 00:24:50
  */
 import React, { useCallback } from 'react'
 import { View } from 'react-native'
@@ -55,7 +55,7 @@ export const Page = observer(
               </View>
             )}
           </View>
-          {DEV && 'visibleBottom' in $?.state && (
+          {DEV && typeof $?.state === 'object' && 'visibleBottom' in $.state && (
             <Text style={styles.visibleBottom} size={8} bold shadow>
               vb:{$.state.visibleBottom}
             </Text>
