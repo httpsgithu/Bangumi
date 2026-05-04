@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2023-04-19 12:28:48
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-04-03 16:40:30
+ * @Last Modified time: 2026-05-02 11:39:41
  */
 import React, { useCallback, useEffect, useState } from 'react'
 import { View } from 'react-native'
@@ -72,7 +72,7 @@ export default ({ index = 0, y = 0, log, flex, visibleBottom, onLayout, children
       {show ? children : null}
       {log && (
         <Flex style={styles.dev}>
-          <Text style={styles.devText} size={8} bold shadow>
+          <Text style={styles.devText} type='__plain__' size={8} bold shadow>
             {logText.join(', ')}
           </Text>
         </Flex>

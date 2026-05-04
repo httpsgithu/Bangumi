@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2022-05-01 14:26:57
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-04-30 00:24:50
+ * @Last Modified time: 2026-05-02 12:03:16
  */
 import React, { useCallback } from 'react'
 import { View } from 'react-native'
@@ -11,6 +11,7 @@ import { useFocusEffect } from '@react-navigation/native'
 import { _, useStore } from '@stores'
 import { stl } from '@utils'
 import { DEV, IOS } from '@constants'
+import { INVIEW_SHOW } from '@src/config'
 import { ErrorBoundary } from '../error-boundary'
 import { Loading } from '../loading'
 import { StatusBar } from '../status-bar'
@@ -55,8 +56,8 @@ export const Page = observer(
               </View>
             )}
           </View>
-          {DEV && typeof $?.state === 'object' && 'visibleBottom' in $.state && (
-            <Text style={styles.visibleBottom} size={8} bold shadow>
+          {DEV && INVIEW_SHOW && typeof $?.state === 'object' && 'visibleBottom' in $.state && (
+            <Text style={styles.visibleBottom} type='__plain__' size={8} bold shadow>
               vb:{$.state.visibleBottom}
             </Text>
           )}
