@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2024-11-04 17:47:23
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-03-20 06:49:14
+ * @Last Modified time: 2026-05-05 05:25:50
  */
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { View } from 'react-native'
@@ -10,7 +10,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-na
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { observer } from 'mobx-react'
 import { _ } from '@stores'
-import { feedback } from '@utils'
+import { feedback, stl } from '@utils'
 import { IOS } from '@constants'
 import { BTN_HEIGHT, DRAG_THRESHOLD } from '../ds'
 import { ScrollView } from '../../scroll-view'
@@ -22,12 +22,22 @@ import type { Props } from '../types'
 
 function Scroll({
   forwardRef,
+  contentContainerStyle,
   height,
   scrollEnabled = true,
   onScroll,
   onClose,
   children
-}: Pick<Props, 'forwardRef' | 'height' | 'scrollEnabled' | 'onScroll' | 'onClose' | 'children'>) {
+}: Pick<
+  Props,
+  | 'forwardRef'
+  | 'contentContainerStyle'
+  | 'height'
+  | 'scrollEnabled'
+  | 'onScroll'
+  | 'onClose'
+  | 'children'
+>) {
   const { bottom } = useSafeAreaInsets()
 
   const scrollY = useRef(0)
@@ -98,7 +108,7 @@ function Scroll({
               height
             }
           ]}
-          contentContainerStyle={_.container.bottom}
+          contentContainerStyle={stl(_.container.bottom, contentContainerStyle)}
           onScrollBeginDrag={IOS ? handleScrollBeginDrag : undefined}
           onScroll={IOS ? handleScroll : onScroll}
           onScrollEndDrag={IOS ? handleScrollEndDrag : undefined}
@@ -115,7 +125,8 @@ function Scroll({
         styles.view,
         {
           height: height - (bottom || 0) - BTN_HEIGHT
-        }
+        },
+        contentContainerStyle
       ]}
     >
       {children}

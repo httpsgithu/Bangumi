@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2022-05-11 19:38:04
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-04-20 21:26:53
+ * @Last Modified time: 2026-05-05 20:33:27
  */
 import { toJS } from 'mobx'
 import { StatusBar } from '@components'
@@ -743,7 +743,7 @@ export default class Action extends Fetch {
       })
       collectionStore.fetchUsersCollection(userId, this.subjectId)
 
-      t('条目.特别关注', {
+      t('条目.追踪', {
         subjectId: this.subjectId,
         type: this.subjectTypeValue,
         userId
@@ -761,7 +761,7 @@ export default class Action extends Fetch {
       const { userId } = userData || {}
       systemStore.cancelTrackUsersCollection(userId, this.subjectTypeValue)
 
-      t('条目.取消特别关注', {
+      t('条目.取消追踪', {
         subjectId: this.subjectId,
         type: this.subjectTypeValue,
         userId

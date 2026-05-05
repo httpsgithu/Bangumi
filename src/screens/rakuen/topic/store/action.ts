@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2023-03-31 02:09:06
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-01-07 05:18:23
+ * @Last Modified time: 2026-05-05 20:33:33
  */
 import { toJS } from 'mobx'
 import { HEADER_TRANSITION_HEIGHT } from '@components/header/utils'
@@ -69,7 +69,7 @@ export default class Action extends Fetch {
     feedback()
   }
 
-  /** 显示特别关注相关的回复 */
+  /** 显示追踪相关的回复 */
   onFilterFollow = () => {
     t('帖子.关注相关', {
       topicId: this.topicId

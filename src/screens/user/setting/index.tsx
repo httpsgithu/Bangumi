@@ -2,13 +2,12 @@
  * @Author: czy0729
  * @Date: 2019-05-24 01:34:26
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-04-25 21:12:10
+ * @Last Modified time: 2026-05-05 21:11:38
  */
 import React from 'react'
-import { Component, HeaderPlaceholder, HeaderV2, Input, Page, ScrollView } from '@components'
+import { observer } from 'mobx-react'
+import { Component, HeaderPlaceholder, Input, Page, ScrollView } from '@components'
 import { _ } from '@stores'
-import { useObserver } from '@utils/hooks'
-import i18n from '@constants/i18n'
 import Block from './component/block'
 import Blocks from './component/blocks'
 import CDN from './component/cdn'
@@ -22,7 +21,6 @@ import Katakana from './component/katakana'
 import Lasttime from './component/lasttime'
 import Rakuen from './component/rakuen'
 import Route from './component/route'
-import Status from './component/status'
 import Storage from './component/storage'
 import Subject from './component/subject'
 import System from './component/system'
@@ -31,27 +29,28 @@ import Timeline from './component/timeline'
 import Timezone from './component/timezone'
 import Tinygrail from './component/tinygrail'
 import Tip from './component/tip'
+import Track from './component/track'
 import UI from './component/ui'
 import User from './component/user'
 import UserSetting from './component/user-setting'
 import Version from './component/version'
 import Zhinan from './component/zhinan'
+import Header from './header'
 import { useSettingPage } from './hooks'
-import { HM } from './ds'
 import { styles } from './styles'
 
 import type { NavigationProps } from '@types'
 import type { Params } from './types'
 
 /** 设置 */
-const Setting = (props: NavigationProps<Params>) => {
-  const { filter, setFilter, open, forwardRef, onBlockRef } = useSettingPage(props)
-  const { navigation } = props
+function Setting(props: NavigationProps<Params>) {
+  const { navigation, filter, setFilter, open, forwardRef, onBlockRef } = useSettingPage(props)
 
-  return useObserver(() => (
+  return (
     <Component id='screen-setting'>
       <Page style={_.select(_.container.bg, _.container.plain)}>
         <HeaderPlaceholder />
+
         <ScrollView forwardRef={forwardRef} contentContainerStyle={styles.container}>
           <Block>
             <Input
@@ -61,9 +60,11 @@ const Setting = (props: NavigationProps<Params>) => {
               onChangeText={setFilter}
             />
           </Block>
+
           <Block>
             <Version filter={filter} />
           </Block>
+
           <Block>
             <Tip>基本</Tip>
             <Theme filter={filter} />
@@ -72,9 +73,10 @@ const Setting = (props: NavigationProps<Params>) => {
             <CDN navigation={navigation} filter={filter} />
             <Route filter={filter} />
             <Blocks navigation={navigation} filter={filter} />
+            <Track navigation={navigation} filter={filter} open={open === 'Track'} />
             <Katakana navigation={navigation} filter={filter} />
-            {/* <Origin navigation={navigation} filter={filter} /> */}
           </Block>
+
           <Block title='module' onBlockRef={onBlockRef}>
             <Tip>模块</Tip>
             <Home filter={filter} />
@@ -86,11 +88,13 @@ const Setting = (props: NavigationProps<Params>) => {
             <Subject filter={filter} open={open === 'Subject'} />
             <Tinygrail filter={filter} open={open === 'Tinygrail'} />
           </Block>
+
           <Block>
             <Tip>相关</Tip>
             <Contact navigation={navigation} filter={filter} />
             <Zhinan navigation={navigation} filter={filter} />
           </Block>
+
           <Block>
             <Tip>系统</Tip>
             <Storage filter={filter} />
@@ -98,19 +102,15 @@ const Setting = (props: NavigationProps<Params>) => {
             <Timezone filter={filter} />
             <DangerZone navigation={navigation} filter={filter} />
           </Block>
+
           <Lasttime />
           <Dev navigation={navigation} />
         </ScrollView>
       </Page>
 
-      <HeaderV2
-        title={i18n.setting()}
-        alias='设置'
-        hm={HM}
-        headerRight={() => <Status navigation={navigation} />}
-      />
+      <Header navigation={navigation} />
     </Component>
-  ))
+  )
 }
 
-export default Setting
+export default observer(Setting)

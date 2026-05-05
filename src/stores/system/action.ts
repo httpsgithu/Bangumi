@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2023-04-23 15:18:22
  * @Last Modified by: czy0729
- * @Last Modified time: 2025-08-12 17:09:47
+ * @Last Modified time: 2026-05-05 20:35:02
  */
 import { confirm, info, titleCase } from '@utils'
 import { read } from '@utils/db'
@@ -352,7 +352,7 @@ export default class Actions extends Fetch {
     this.save(STATE_KEY)
   }
 
-  /** 追踪特定用户收藏相关信息 */
+  /** 追踪特定用户条目类型吐槽 */
   trackUsersCollection = (userName: UserId, type: SubjectType = 'anime') => {
     const ITEM_KEY = `comment${titleCase(type)}` as const
     const value = [...(this.setting[ITEM_KEY] || [])]
@@ -360,10 +360,10 @@ export default class Actions extends Fetch {
 
     if (!this.advance && value.length > APP_FREE_TRACK_COLLECTION) {
       confirm(
-        `普通会员同类别最大支持 ${APP_FREE_TRACK_COLLECTION} 人，是否用此用户替代先前的特别关注？`,
+        `普通会员同类别最大支持 ${APP_FREE_TRACK_COLLECTION} 人，是否用此用户替代先前的追踪？`,
         () => {
           this.setSetting(ITEM_KEY, [userName])
-          info('已关注')
+          info('已追踪')
           return true
         }
       )
@@ -372,11 +372,11 @@ export default class Actions extends Fetch {
 
     if (value.length > APP_ADVANCE_TRACK_COLLECTION) {
       confirm(
-        `高级会员当前已满最大支持 ${APP_ADVANCE_TRACK_COLLECTION} 人，是否用此用户替代最早的特别关注？`,
+        `高级会员当前已满最大支持 ${APP_ADVANCE_TRACK_COLLECTION} 人，是否用此用户替代最早的追踪？`,
         () => {
           value.pop()
           this.setSetting(ITEM_KEY, value)
-          info('已关注')
+          info('已追踪')
           return true
         }
       )
@@ -384,11 +384,11 @@ export default class Actions extends Fetch {
     }
 
     this.setSetting(ITEM_KEY, value)
-    info('已关注')
+    info('已追踪')
     return true
   }
 
-  /** 取消追踪特定用户收藏相关信息 */
+  /** 取消追踪特定用户条目类型吐槽 */
   cancelTrackUsersCollection = (userName: UserId, type: SubjectType = 'anime') => {
     const ITEM_KEY = `comment${titleCase(type)}` as const
     const value = (this.setting[ITEM_KEY] || []).filter(item => item !== userName)
@@ -406,7 +406,7 @@ export default class Actions extends Fetch {
 
     if (!this.advance && value.length > APP_FREE_TRACK_COLLECTION_TIMELINES) {
       confirm(
-        `普通会员同类别最大支持 ${APP_FREE_TRACK_COLLECTION_TIMELINES} 人，是否用此用户替代先前的特别关注？`,
+        `普通会员同类别最大支持 ${APP_FREE_TRACK_COLLECTION_TIMELINES} 人，是否用此用户替代先前的追踪？`,
         () => {
           this.setSetting(ITEM_KEY, [userName])
           info('已追踪')
@@ -418,7 +418,7 @@ export default class Actions extends Fetch {
 
     if (value.length > APP_ADVANCE_TRACK_COLLECTION_TIMELINES) {
       confirm(
-        `高级会员当前已满最大支持 ${APP_ADVANCE_TRACK_COLLECTION_TIMELINES} 人，是否用此用户替代最早的特别关注？`,
+        `高级会员当前已满最大支持 ${APP_ADVANCE_TRACK_COLLECTION_TIMELINES} 人，是否用此用户替代最早的追踪？`,
         () => {
           value.pop()
           this.setSetting(ITEM_KEY, value)
@@ -434,7 +434,7 @@ export default class Actions extends Fetch {
     return true
   }
 
-  /** 取消追踪特定用户收藏相关信息 */
+  /** 取消追踪特定用户收藏时间线 */
   cancelTrackCollectionTimelines = (userName: UserId) => {
     const ITEM_KEY = 'collectionTimelines'
     const value = (this.setting[ITEM_KEY] || []).filter(item => item !== userName)

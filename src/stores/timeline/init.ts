@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2019-07-15 11:07:38
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-01-20 08:22:55
+ * @Last Modified time: 2026-05-04 18:38:44
  */
 import { LIST_EMPTY, MODEL_TIMELINE_SCOPE, MODEL_TIMELINE_TYPE } from '@constants'
 
@@ -57,7 +57,10 @@ export const STATE = {
   active: {} as Record<UserId, number>,
 
   /** 用户的追踪收藏时间线 */
-  collectionTimelines: {} as Record<UserId, CollectionTimelines>
+  collectionTimelines: {} as Record<UserId, CollectionTimelines>,
+
+  /** 用户的收藏时间线次数追踪 */
+  collectionTimelinesTrack: {} as Record<UserId, number>
 }
 
 export const LOADED = {

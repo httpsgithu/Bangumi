@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2024-03-25 23:32:14
  * @Last Modified by: czy0729
- * @Last Modified time: 2024-03-26 04:52:58
+ * @Last Modified time: 2026-05-05 20:33:56
  */
 import React from 'react'
 import { Text } from '@components'
@@ -29,7 +29,7 @@ function Section3() {
         　　进度：支持最大显示 300 个在看条目
       </Text>
       <Text style={_.mt.sm} {...FONT_BASE}>
-        　　条目：支持特别关注多个用户吐槽点评
+        　　条目：支持追踪多个用户吐槽点评
       </Text>
       <Text style={_.mt.sm} {...FONT_BASE}>
         　时光机：条目吐槽能索引到更早的贴贴内容

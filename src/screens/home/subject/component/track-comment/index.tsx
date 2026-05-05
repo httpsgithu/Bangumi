@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2023-02-03 15:44:49
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-05-02 12:16:47
+ * @Last Modified time: 2026-05-05 21:17:33
  */
 import React from 'react'
 import { observer } from 'mobx-react'
@@ -13,6 +13,7 @@ import { getTimestamp, lastDate, titleCase } from '@utils'
 import {
   MODEL_COLLECTION_STATUS,
   TEXT_MENU_CANCEL_TRACK_COLLECTIONS_TIMELINE,
+  TEXT_MENU_MANAGE_TRACK,
   TEXT_MENU_TRACK_COLLECTIONS_TIMELINE
 } from '@constants'
 import { COMPONENT, POPOVER_DATA } from './ds'
@@ -22,7 +23,7 @@ import type { CollectionStatusCn, UserId } from '@types'
 import type { Ctx } from '../../types'
 
 function TrackComment() {
-  const { $ } = useStore<Ctx>(COMPONENT)
+  const { $, navigation } = useStore<Ctx>(COMPONENT)
 
   if (!$.subjectTypeValue) return null
 
@@ -41,7 +42,7 @@ function TrackComment() {
   const event = {
     id: '条目.跳转',
     data: {
-      from: '特别关注',
+      from: '追踪',
       subjectId: $.subjectId
     }
   } as const
@@ -66,6 +67,7 @@ function TrackComment() {
                 : TEXT_MENU_TRACK_COLLECTIONS_TIMELINE
             )
           }
+          popoverData.push(TEXT_MENU_MANAGE_TRACK)
 
           return (
             <ItemComment
@@ -82,6 +84,13 @@ function TrackComment() {
               popoverData={popoverData}
               like
               onSelect={(title, userData) => {
+                if (title === TEXT_MENU_MANAGE_TRACK) {
+                  navigation.push('Setting', {
+                    open: 'Track'
+                  })
+                  return
+                }
+
                 if (title === TEXT_MENU_CANCEL_TRACK_COLLECTIONS_TIMELINE) {
                   systemStore.cancelTrackCollectionTimelines(userId)
                   return

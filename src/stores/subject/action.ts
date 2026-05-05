@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2023-04-16 13:38:53
  * @Last Modified by: czy0729
- * @Last Modified time: 2024-01-13 21:59:30
+ * @Last Modified time: 2026-05-05 20:34:17
  */
 import CryptoJS from 'crypto-js'
 import { read } from '@utils/db'
@@ -12,7 +12,7 @@ import UserStore from '../user'
 import Fetch from './fetch'
 import { getInt, getSubjectSnapshot } from './utils'
 
-import type { Actions, Origin, SubjectId } from '@types'
+import type { Actions, Origin, SubjectId, SubjectType, UserId } from '@types'
 import type { SubjectSnapshot } from './types'
 
 export default class Action extends Fetch {
@@ -149,5 +149,18 @@ export default class Action extends Fetch {
       [key]: data
     })
     this.save(key)
+  }
+
+  /** 追踪TA的评论次数追踪 +1 */
+  trackComment = (userId: UserId, type: SubjectType) => {
+    const STATE_KEY = 'commentTrack'
+    const ITEM_ARGS = [userId, type] as const
+    const ITEM_KEY = ITEM_ARGS.join('|')
+    this.setState({
+      [STATE_KEY]: {
+        [ITEM_KEY]: this[STATE_KEY](...ITEM_ARGS) + 1
+      }
+    })
+    this.save(STATE_KEY)
   }
 }

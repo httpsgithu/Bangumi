@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2026-05-02 10:06:29
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-05-04 13:48:20
+ * @Last Modified time: 2026-05-05 21:13:09
  */
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { View } from 'react-native'
@@ -20,11 +20,12 @@ import { Avatar, Flex, Popover, Text } from '@components'
 import { systemStore, timelineStore } from '@stores'
 import { lastDate, stl } from '@utils'
 import { useNavigation } from '@utils/hooks'
-import { TEXT_MENU_MANAGE, withSplit } from '@constants'
+import { TEXT_MENU_MANAGE_TRACK, withSplit } from '@constants'
 import { ANIM_DURATION_PER_AVATAR, AVATAR_SIZE, MOVE_DISTANCE, PAUSE_RATIO } from './ds'
 import { memoStyles } from './styles'
 
 import type { Props } from './types'
+
 function TimelineAvatars({ subjectId, sort, isSide }: Props) {
   const navigation = useNavigation()
 
@@ -92,16 +93,19 @@ function TimelineAvatars({ subjectId, sort, isSide }: Props) {
   const memoData = useMemo(
     () => [
       ...users.map(item => `${item.name}${withSplit(lastDate(item.sort.lasttouch))}`),
-      TEXT_MENU_MANAGE
+      TEXT_MENU_MANAGE_TRACK
     ],
     [users]
   )
+
   const handleSelect = useCallback(
     (label: string, index: number) => {
       if (!navigation) return
 
-      if (label === TEXT_MENU_MANAGE) {
-        navigation.push('Setting')
+      if (label === TEXT_MENU_MANAGE_TRACK) {
+        navigation.push('Setting', {
+          open: 'Track'
+        })
         return
       }
 

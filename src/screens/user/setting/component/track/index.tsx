@@ -1,0 +1,54 @@
+/*
+ * @Author: czy0729
+ * @Date: 2023-02-14 03:18:20
+ * @Last Modified by: czy0729
+ * @Last Modified time: 2026-05-05 21:31:02
+ */
+import React from 'react'
+import { observer } from 'mobx-react'
+import { ActionSheet } from '@components'
+import { ItemSetting } from '@_'
+import { r } from '@utils/dev'
+import { useBoolean } from '@utils/hooks'
+import { getShows } from '../../utils'
+import Comment from './comment'
+import { COMPONENT, TEXTS } from './ds'
+import { styles } from './styles'
+
+import type { WithNavigation } from '@types'
+import type { WithFilterProps } from '../../types'
+
+/** 追踪 */
+function Track({
+  navigation,
+  filter,
+  open
+}: WithNavigation<
+  WithFilterProps<{
+    open: boolean
+  }>
+>) {
+  r(COMPONENT)
+
+  const { state, setTrue, setFalse } = useBoolean(open)
+  const shows = getShows(filter, TEXTS)
+
+  if (!shows) return null
+
+  return (
+    <>
+      <ItemSetting hd='追踪' arrow highlight filter={filter} onPress={setTrue} />
+      <ActionSheet
+        contentContainerStyle={styles.container}
+        show={state}
+        title='追踪'
+        height={760}
+        onClose={setFalse}
+      >
+        {shows.comment && <Comment navigation={navigation} filter={filter} setFalse={setFalse} />}
+      </ActionSheet>
+    </>
+  )
+}
+
+export default observer(Track)

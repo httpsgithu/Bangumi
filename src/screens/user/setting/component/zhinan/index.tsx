@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2022-01-21 13:46:59
  * @Last Modified by: czy0729
- * @Last Modified time: 2024-09-11 19:46:13
+ * @Last Modified time: 2026-05-04 14:46:14
  */
 import React from 'react'
 import { ActionSheet } from '@components'
@@ -15,6 +15,7 @@ import Privacy from './privacy'
 import RepoGithub from './repo-github'
 import RepoTopic from './repo-topic'
 import ServerStatus from './server-status'
+import Tips from './tips'
 import { COMPONENT, TEXTS } from './ds'
 
 /** 更多 */
@@ -32,6 +33,7 @@ function Zhinan({ navigation, filter }) {
         <ItemSetting hd='更多' arrow highlight filter={filter} onPress={setTrue} />
         <ActionSheet show={state} title='更多' onClose={setFalse}>
           {shows.topic && <RepoTopic navigation={navigation} filter={filter} setFalse={setFalse} />}
+          {shows.tips && <Tips navigation={navigation} filter={filter} setFalse={setFalse} />}
           {shows.serverStatus && <ServerStatus navigation={navigation} filter={filter} />}
           {shows.github && <RepoGithub filter={filter} />}
           {shows.zhinan && (

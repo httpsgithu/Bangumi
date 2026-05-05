@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2019-07-15 09:27:59
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-04-20 11:19:53
+ * @Last Modified time: 2026-05-05 20:34:21
  */
 import { LIST_EMPTY } from '@constants'
 import { MODEL_RATING_STATUS } from '@constants/model'
@@ -16,7 +16,8 @@ import type {
   Origin,
   RatingStatus,
   SubjectId,
-  SubjectType
+  SubjectType,
+  UserId
 } from '@types'
 import type {
   ComputedRating,
@@ -334,7 +335,10 @@ const STATE = {
   } as Origin,
 
   /** 自定义跳转 */
-  actions: {} as Actions
+  actions: {} as Actions,
+
+  /** 追踪TA的评论次数追踪 */
+  commentTrack: {} as Record<`${UserId}|${SubjectType}`, number>
 }
 
 /**
@@ -368,5 +372,6 @@ export const LOADED = {
   origin: false,
   rank: false,
   subjectFromOSS: false,
-  vib: false
+  vib: false,
+  commentTrack: false
 }

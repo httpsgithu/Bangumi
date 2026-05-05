@@ -2,17 +2,18 @@
  * @Author: czy0729
  * @Date: 2024-11-04 17:47:23
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-03-18 03:46:32
+ * @Last Modified time: 2026-05-05 05:25:27
  */
 import React from 'react'
 import { View } from 'react-native'
 import { observer } from 'mobx-react'
 import { _ } from '@stores'
+import { stl } from '@utils'
 import { BTN_HEIGHT } from '../ds'
 import { ScrollView } from '../../scroll-view'
 import { memoStyles } from './styles'
 
-function Scroll({ height, scrollEnabled = true, children }) {
+function Scroll({ contentContainerStyle, height, scrollEnabled = true, children }) {
   const styles = memoStyles()
 
   if (scrollEnabled) {
@@ -24,7 +25,7 @@ function Scroll({ height, scrollEnabled = true, children }) {
             height
           }
         ]}
-        contentContainerStyle={_.container.bottom}
+        contentContainerStyle={stl(_.container.bottom, contentContainerStyle)}
       >
         {children}
       </ScrollView>
@@ -37,7 +38,8 @@ function Scroll({ height, scrollEnabled = true, children }) {
         styles.view,
         {
           height: height - BTN_HEIGHT - _.xs
-        }
+        },
+        contentContainerStyle
       ]}
     >
       {children}

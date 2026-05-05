@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2023-04-24 14:31:09
  * @Last Modified by: czy0729
- * @Last Modified time: 2024-12-25 17:52:14
+ * @Last Modified time: 2026-05-05 20:34:49
  */
 import { confirm, getTimestamp, info } from '@utils'
 import { syncSystemStore, syncUserStore } from '@utils/async'
@@ -786,24 +786,21 @@ export default class Action extends Fetch {
     if (!value.includes(userName)) value.unshift(userName)
 
     if (!syncSystemStore().advance && value.length > APP_FREE_TRACK_COMMENT) {
-      confirm(
-        `普通会员最大支持 ${APP_FREE_TRACK_COMMENT} 人，是否用此用户替代先前的特别关注？`,
-        () => {
-          this.setSetting(key, [userName])
-          info('已关注')
-          return true
-        }
-      )
+      confirm(`普通会员最大支持 ${APP_FREE_TRACK_COMMENT} 人，是否用此用户替代先前的追踪？`, () => {
+        this.setSetting(key, [userName])
+        info('已追踪')
+        return true
+      })
       return false
     }
 
     if (value.length > APP_ADVANCE_TRACK_COMMENT) {
       confirm(
-        `高级会员当前已满最大支持 ${APP_ADVANCE_TRACK_COMMENT} 人，是否用此用户替代最早的特别关注？`,
+        `高级会员当前已满最大支持 ${APP_ADVANCE_TRACK_COMMENT} 人，是否用此用户替代最早的追踪？`,
         () => {
           value.pop()
           this.setSetting(key, value)
-          info('已关注')
+          info('已追踪')
           return true
         }
       )
@@ -811,7 +808,7 @@ export default class Action extends Fetch {
     }
 
     this.setSetting(key, value)
-    info('已关注')
+    info('已追踪')
     return true
   }
 

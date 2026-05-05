@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2022-10-19 13:15:42
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-03-16 23:55:47
+ * @Last Modified time: 2026-05-05 05:26:10
  */
 import type { PropsWithChildren } from 'react'
 import type { ReactNode } from '@types'
@@ -11,6 +11,9 @@ import type { ScrollViewProps } from '../scroll-view'
 export type Props = PropsWithChildren<{
   /** 连接组件内部 ScrollView.scrollTo */
   forwardRef?: ScrollViewProps['forwardRef']
+
+  /** 容器样式 */
+  contentContainerStyle?: ScrollViewProps['contentContainerStyle']
 
   /** 是否显示 */
   show?: boolean

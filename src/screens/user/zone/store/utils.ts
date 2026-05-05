@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2024-04-30 01:43:01
  * @Last Modified by: czy0729
- * @Last Modified time: 2024-04-30 01:54:30
+ * @Last Modified time: 2026-05-05 20:34:03
  */
 import { systemStore, usersStore } from '@stores'
 import { titleCase } from '@utils'
@@ -11,7 +11,7 @@ import { SUBJECT_TYPE } from '@constants'
 import type { INIT_USER_INFO } from '@stores/user/init'
 import type { UserId } from '@types'
 
-/** 判断是否需要更新条目里特别关注用户的信息 */
+/** 判断是否需要更新条目里追踪用户的信息 */
 export function updateTrackUserInfo(userInfo: typeof INIT_USER_INFO) {
   if (!userInfo?.username || !userInfo?.avatar?.medium || !userInfo?.nickname) return
 

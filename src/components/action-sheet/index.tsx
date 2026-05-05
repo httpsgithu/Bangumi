@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2021-12-25 03:23:18
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-04-02 00:49:40
+ * @Last Modified time: 2026-05-05 05:26:31
  */
 import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { View } from 'react-native'
@@ -35,6 +35,7 @@ export type { ActionSheetProps }
 export const ActionSheet = observer(
   ({
     forwardRef,
+    contentContainerStyle,
     show = false,
     height = 480,
     title = '',
@@ -163,6 +164,7 @@ export const ActionSheet = observer(
           <Animated.View style={[styles.content, { height: calcHeight }, contentStyle]}>
             <Scroll
               forwardRef={forwardRef}
+              contentContainerStyle={contentContainerStyle}
               height={calcHeight}
               scrollEnabled={scrollEnabled}
               onScroll={onScroll}

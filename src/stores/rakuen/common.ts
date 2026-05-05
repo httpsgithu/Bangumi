@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2019-07-13 18:59:53
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-04-01 06:07:34
+ * @Last Modified time: 2026-05-04 15:05:35
  */
 import {
   cData,
@@ -528,7 +528,7 @@ export function cheerioTopicEdit(html: string): string | boolean {
 
 /** 个人设置隐私 */
 export function cheerioPrivacy(html: string) {
-  const $ = cheerio(htmlMatch(html, '<div id="columnA"', '<div id="columnB"'))
+  const $ = cheerio(htmlMatch(html, '<div id="columnSearchB', '<div id="footer'))
 
   const blockedUsers: BlockedUsersItem[] = []
   $('tr').each((_index: number, element: any) => {

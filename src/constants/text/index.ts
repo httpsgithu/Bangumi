@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2021-02-23 10:40:56
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-05-04 13:44:47
+ * @Last Modified time: 2026-05-05 20:08:00
  */
 import Crypto from '@utils/crypto'
 import { WEB } from '../device'
@@ -232,8 +232,8 @@ export const TEXT_MENU_TRACK_COLLECTIONS_TIMELINE = '追踪TA的动画观看进�
 /** 菜单: 取消追踪动画观看进度 */
 export const TEXT_MENU_CANCEL_TRACK_COLLECTIONS_TIMELINE = '取消追踪动画观看进度'
 
-/** 菜单: 管理 */
-export const TEXT_MENU_MANAGE = '管理'
+/** 菜单: 追踪管理 */
+export const TEXT_MENU_MANAGE_TRACK = '追踪管理'
 
 /** 标记 */
 export const TEXT_BADGES = {

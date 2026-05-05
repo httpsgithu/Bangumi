@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2023-03-31 02:01:32
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-04-20 12:13:25
+ * @Last Modified time: 2026-05-05 20:33:51
  */
 import { computed } from 'mobx'
 import { rakuenStore, subjectStore, systemStore, usersStore, userStore } from '@stores'
@@ -193,7 +193,7 @@ export default class Computed extends State {
     })
   }
 
-  /** 特别关注的回复数统计 */
+  /** 追踪的回复数统计 */
   @computed get commentFollowCount() {
     const { commentTrack } = rakuenStore.setting
     if (!commentTrack.length) return 0
