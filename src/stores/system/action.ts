@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2023-04-23 15:18:22
  * @Last Modified by: czy0729
- * @Last Modified time: 2025-08-12 17:09:47
+ * @Last Modified time: 2026-05-05 20:35:02
  */
 import { confirm, info, titleCase } from '@utils'
 import { read } from '@utils/db'
@@ -10,7 +10,9 @@ import { get, update } from '@utils/kv'
 import {
   APP_ADVANCE_CDN,
   APP_ADVANCE_TRACK_COLLECTION,
+  APP_ADVANCE_TRACK_COLLECTION_TIMELINES,
   APP_FREE_TRACK_COLLECTION,
+  APP_FREE_TRACK_COLLECTION_TIMELINES,
   MODEL_SETTING_CDN_ORIGIN,
   MODEL_SETTING_HOME_COUNT_VIEW,
   MODEL_SETTING_HOME_LAYOUT,
@@ -343,25 +345,25 @@ export default class Actions extends Fetch {
 
   /** 同意社区指导原则 */
   updateUGCAgree = (value: boolean = true) => {
-    const key = 'iosUGCAgree'
+    const STATE_KEY = 'iosUGCAgree'
     this.setState({
-      [key]: value
+      [STATE_KEY]: value
     })
-    this.save(key)
+    this.save(STATE_KEY)
   }
 
-  /** 追踪特定用户收藏相关信息 */
+  /** 追踪特定用户条目类型吐槽 */
   trackUsersCollection = (userName: UserId, type: SubjectType = 'anime') => {
-    const key = `comment${titleCase(type)}` as const
-    const value = [...(this.setting[key] || [])]
+    const ITEM_KEY = `comment${titleCase(type)}` as const
+    const value = [...(this.setting[ITEM_KEY] || [])]
     if (!value.includes(userName)) value.unshift(userName)
 
     if (!this.advance && value.length > APP_FREE_TRACK_COLLECTION) {
       confirm(
-        `普通会员同类别最大支持 ${APP_FREE_TRACK_COLLECTION} 人，是否用此用户替代先前的特别关注？`,
+        `普通会员同类别最大支持 ${APP_FREE_TRACK_COLLECTION} 人，是否用此用户替代先前的追踪？`,
         () => {
-          this.setSetting(key, [userName])
-          info('已关注')
+          this.setSetting(ITEM_KEY, [userName])
+          info('已追踪')
           return true
         }
       )
@@ -370,31 +372,79 @@ export default class Actions extends Fetch {
 
     if (value.length > APP_ADVANCE_TRACK_COLLECTION) {
       confirm(
-        `高级会员当前已满最大支持 ${APP_ADVANCE_TRACK_COLLECTION} 人，是否用此用户替代最早的特别关注？`,
+        `高级会员当前已满最大支持 ${APP_ADVANCE_TRACK_COLLECTION} 人，是否用此用户替代最早的追踪？`,
         () => {
           value.pop()
-          this.setSetting(key, value)
-          info('已关注')
+          this.setSetting(ITEM_KEY, value)
+          info('已追踪')
           return true
         }
       )
       return false
     }
 
-    this.setSetting(key, value)
-    info('已关注')
+    this.setSetting(ITEM_KEY, value)
+    info('已追踪')
     return true
   }
 
-  /** 取消追踪特定用户收藏相关信息 */
+  /** 取消追踪特定用户条目类型吐槽 */
   cancelTrackUsersCollection = (userName: UserId, type: SubjectType = 'anime') => {
-    const key = `comment${titleCase(type)}` as const
-    const value = (this.setting[key] || []).filter(item => item !== userName)
-    this.setSetting(key, value)
+    const ITEM_KEY = `comment${titleCase(type)}` as const
+    const value = (this.setting[ITEM_KEY] || []).filter(item => item !== userName)
+
+    this.setSetting(ITEM_KEY, value)
     info('已取消')
     return true
   }
 
+  /** 追踪特定用户收藏时间线 */
+  trackCollectionTimelines = (userName: UserId) => {
+    const ITEM_KEY = 'collectionTimelines'
+    const value = [...(this.setting[ITEM_KEY] || [])]
+    if (!value.includes(userName)) value.unshift(userName)
+
+    if (!this.advance && value.length > APP_FREE_TRACK_COLLECTION_TIMELINES) {
+      confirm(
+        `普通会员同类别最大支持 ${APP_FREE_TRACK_COLLECTION_TIMELINES} 人，是否用此用户替代先前的追踪？`,
+        () => {
+          this.setSetting(ITEM_KEY, [userName])
+          info('已追踪')
+          return true
+        }
+      )
+      return false
+    }
+
+    if (value.length > APP_ADVANCE_TRACK_COLLECTION_TIMELINES) {
+      confirm(
+        `高级会员当前已满最大支持 ${APP_ADVANCE_TRACK_COLLECTION_TIMELINES} 人，是否用此用户替代最早的追踪？`,
+        () => {
+          value.pop()
+          this.setSetting(ITEM_KEY, value)
+          info('已追踪')
+          return true
+        }
+      )
+      return false
+    }
+
+    this.setSetting(ITEM_KEY, value)
+    info('已追踪')
+    return true
+  }
+
+  /** 取消追踪特定用户收藏时间线 */
+  cancelTrackCollectionTimelines = (userName: UserId) => {
+    const ITEM_KEY = 'collectionTimelines'
+    const value = (this.setting[ITEM_KEY] || []).filter(item => item !== userName)
+
+    this.setSetting(ITEM_KEY, value)
+    info('已取消追踪')
+    return true
+  }
+
+  /** 内部统计计数器 */
   private _track = 0
 
   /** 内部统计 */

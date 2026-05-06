@@ -2,13 +2,14 @@
  * @Author: czy0729
  * @Date: 2022-01-21 12:10:17
  * @Last Modified by: czy0729
- * @Last Modified time: 2025-08-19 22:08:42
+ * @Last Modified time: 2026-05-05 22:14:36
  */
 import React from 'react'
+import { observer } from 'mobx-react'
 import { ActionSheet } from '@components'
 import { ItemSetting } from '@_'
 import { r } from '@utils/dev'
-import { useBoolean, useObserver } from '@utils/hooks'
+import { useBoolean } from '@utils/hooks'
 import { getShows } from '../../utils'
 import CnFirst from './cn-first'
 import FilterDefault from './filter-default'
@@ -21,33 +22,38 @@ import Spacing from './spacing'
 import UserAge from './user-age'
 import { COMPONENT, TEXTS } from './ds'
 
+import type { WithFilterProps } from '../../types'
+
 /** 定制 */
-function Custom({ filter }) {
+function Custom({ filter }: WithFilterProps) {
   r(COMPONENT)
 
   const { state, setTrue, setFalse } = useBoolean(false)
   const shows = getShows(filter, TEXTS)
 
-  return useObserver(() => {
-    if (!shows) return null
+  if (!shows) return null
 
-    return (
-      <>
-        <ItemSetting hd='定制' arrow highlight filter={filter} onPress={setTrue} />
-        <ActionSheet show={state} title='定制' height={filter ? 440 : 760} onClose={setFalse}>
-          {shows.cnFirst && <CnFirst filter={filter} />}
-          {shows.heatMap && <HeatMap filter={filter} />}
-          {shows.s2t && <S2T filter={filter} />}
-          {shows.spacing && <Spacing filter={filter} />}
-          {shows.userAge && <UserAge filter={filter} />}
-          {shows.hideScore && <HideScore filter={filter} />}
-          {shows.filterDefault && <FilterDefault filter={filter} />}
-          {shows.openInfo && <OpenInfo filter={filter} />}
-          {shows.filter18x && <FilterNSFW filter={filter} />}
-        </ActionSheet>
-      </>
-    )
-  })
+  return (
+    <>
+      <ItemSetting arrow highlight filter={filter} onPress={setTrue} {...TEXTS.custom} />
+      <ActionSheet
+        show={state}
+        title={TEXTS.custom.hd}
+        height={filter ? 440 : 760}
+        onClose={setFalse}
+      >
+        {shows.cnFirst && <CnFirst filter={filter} />}
+        {shows.heatMap && <HeatMap filter={filter} />}
+        {shows.s2t && <S2T filter={filter} />}
+        {shows.spacing && <Spacing filter={filter} />}
+        {shows.userAge && <UserAge filter={filter} />}
+        {shows.hideScore && <HideScore filter={filter} />}
+        {shows.filterDefault && <FilterDefault filter={filter} />}
+        {shows.openInfo && <OpenInfo filter={filter} />}
+        {shows.filter18x && <FilterNSFW filter={filter} />}
+      </ActionSheet>
+    </>
+  )
 }
 
-export default Custom
+export default observer(Custom)

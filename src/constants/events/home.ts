@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2022-05-11 04:38:44
  * @Last Modified by: czy0729
- * @Last Modified time: 2025-02-14 08:51:36
+ * @Last Modified time: 2026-05-05 20:32:14
  */
 
 /** Home */
@@ -72,8 +72,8 @@ export default {
   '条目.吐槽倒序': 'Subject.reverseComment',
   '条目.吐槽看当前版本': 'Subject.currentVersion',
   '条目.拼图分享': 'Subject.sharePoster',
-  '条目.特别关注': 'Subject.trackComment',
-  '条目.取消特别关注': 'Subject.cancelTrackComment',
+  '条目.追踪': 'Subject.trackComment',
+  '条目.取消追踪': 'Subject.cancelTrackComment',
   '条目.导出日程': 'Subject.ics',
   '条目.屏蔽用户': 'Subject.blockUser',
   '条目.绝交': 'Subject.blockUser',

@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2023-04-25 16:25:06
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-02-02 07:14:42
+ * @Last Modified time: 2026-05-06 05:22:42
  */
 import { computed } from 'mobx'
 import { desc } from '@utils'
@@ -78,6 +78,40 @@ export default class Computed extends State implements StoreConstructor<typeof S
     this.init(STATE_KEY, true)
 
     return this.state[STATE_KEY]
+  }
+
+  /** 多个用户的追踪收藏时间线 */
+  collectionTimelines(userIds: UserId[] = [], subjectId: SubjectId) {
+    const STATE_KEY = 'collectionTimelines'
+    this.init(STATE_KEY, true)
+
+    return computed(() => {
+      return userIds
+        .map(userId => {
+          const data = this.state[STATE_KEY][userId]
+          if (data?.map?.[subjectId]) {
+            const { map, ...other } = data
+            return {
+              ...other,
+              userId,
+              sort: map[subjectId]
+            }
+          }
+          return null
+        })
+        .filter(item => item !== null)
+    }).get()
+  }
+
+  /** 用户的收藏时间线次数追踪 */
+  collectionTimelinesTrack(userId: UserId) {
+    const STATE_KEY = 'collectionTimelinesTrack'
+    this.init(STATE_KEY, true)
+
+    return computed(() => {
+      const ITEM_KEY = userId
+      return this.state[STATE_KEY][ITEM_KEY] || 0
+    }).get()
   }
 
   /** ==================== computed ==================== */

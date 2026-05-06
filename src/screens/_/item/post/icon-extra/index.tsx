@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2021-01-20 12:15:22
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-03-20 05:37:12
+ * @Last Modified time: 2026-05-05 20:35:56
  */
 import React, { useCallback, useMemo, useRef } from 'react'
 import { View } from 'react-native'
@@ -75,7 +75,7 @@ function IconExtra({
         ACTION_COPY,
         ACTION_COPY_URL,
 
-        // 关注
+        // 追踪
         rakuenStore.commentTracked(userId) ? ACTION_UNTRACK : ACTION_TRACK,
 
         // 翻译
@@ -143,7 +143,7 @@ function IconExtra({
         case ACTION_TRACK:
           rakuenStore.trackUsersComment(userId)
 
-          t('帖子.特别关注', {
+          t('帖子.追踪', {
             userId
           })
           break
@@ -151,7 +151,7 @@ function IconExtra({
         case ACTION_UNTRACK:
           rakuenStore.cancelTrackUsersComment(userId)
 
-          t('帖子.取消特别关注', {
+          t('帖子.取消追踪', {
             userId
           })
           break

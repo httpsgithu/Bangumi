@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2023-04-16 13:15:43
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-04-20 11:18:40
+ * @Last Modified time: 2026-05-05 20:34:20
  */
 import { computed } from 'mobx'
 import { x18 } from '@utils'
@@ -31,7 +31,9 @@ import type {
   RatingStatus,
   StoreConstructor,
   SubjectId,
-  SubjectTypeValue
+  SubjectType,
+  SubjectTypeValue,
+  UserId
 } from '@types'
 import type {
   ComputedRating,
@@ -308,6 +310,17 @@ export default class Computed extends State implements StoreConstructor<typeof S
     return computed(() => {
       const ITEM_KEY = subjectId
       return (this.state[STATE_KEY][ITEM_KEY] || []) as ActionsItem
+    }).get()
+  }
+
+  /** 追踪TA的评论次数追踪 */
+  commentTrack(userId: UserId, type: SubjectType) {
+    const STATE_KEY = 'commentTrack'
+    this.init(STATE_KEY, true)
+
+    return computed(() => {
+      const ITEM_KEY = `${userId}|${type}` as const
+      return this.state[STATE_KEY][ITEM_KEY] || 0
     }).get()
   }
 

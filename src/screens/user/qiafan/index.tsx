@@ -5,9 +5,9 @@
  * @Last Modified time: 2025-12-27 06:37:04
  */
 import React from 'react'
+import { observer } from 'mobx-react'
 import { Component, Divider, HeaderPlaceholder, HeaderV2, ScrollView } from '@components'
 import { _, userStore } from '@stores'
-import { ob } from '@utils/decorators'
 import Section1 from './component/section-1'
 import Section2 from './component/section-2'
 import Section3 from './component/section-3'
@@ -40,4 +40,4 @@ function Qiafan() {
   )
 }
 
-export default ob(Qiafan)
+export default observer(Qiafan)

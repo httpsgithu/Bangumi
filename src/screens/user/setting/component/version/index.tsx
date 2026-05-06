@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2022-01-22 16:25:33
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-03-16 20:32:14
+ * @Last Modified time: 2026-05-05 22:18:21
  */
 import React from 'react'
 import { Text } from '@components'
@@ -15,8 +15,10 @@ import { URL_RELEASE, VERSION_GITHUB_RELEASE } from '@constants'
 import { getShows } from '../../utils'
 import { COMPONENT, TEXTS } from './ds'
 
+import type { WithFilterProps } from '../../types'
+
 /** 版本 */
-function Version({ filter }) {
+function Version({ filter }: WithFilterProps) {
   const shows = getShows(filter, TEXTS)
   if (!shows) return null
 
@@ -38,15 +40,15 @@ function Version({ filter }) {
       highlight
       ft={
         hasNewVersion ? (
-          <Text type='success' size={15}>
+          <Text type='success' bold>
             {`${TEXTS.version.ft}${name}`}
-            <Text type='sub' size={15}>
+            <Text type='sub' bold>
               {' '}
               / {VERSION_GITHUB_RELEASE}
             </Text>
           </Text>
         ) : (
-          <Text type='sub' size={15}>
+          <Text type='sub' bold>
             {VERSION_GITHUB_RELEASE}
           </Text>
         )

@@ -2,21 +2,23 @@
  * @Author: czy0729
  * @Date: 2024-04-25 04:27:22
  * @Last Modified by: czy0729
- * @Last Modified time: 2024-04-25 04:29:15
+ * @Last Modified time: 2026-05-05 22:38:04
  */
 import React from 'react'
+import { observer } from 'mobx-react'
 import { ItemSettingBlock } from '@_'
 import { _, userStore } from '@stores'
-import { useObserver } from '@utils/hooks'
 import i18n from '@constants/i18n'
 import { useCloud } from '../hooks'
 import { handleDownload, handleRestore, handleUpload } from '../utils'
 
+import type { WithFilterProps } from '../../../types'
+
 /** 同步设置 */
-function SyncSetting({ filter }) {
+function SyncSetting({ filter }: WithFilterProps) {
   const text = useCloud()
 
-  return useObserver(() => (
+  return (
     <ItemSettingBlock
       style={_.mt.sm}
       title={`同步${i18n.setting()}`}
@@ -55,7 +57,7 @@ function SyncSetting({ filter }) {
         onPress={handleRestore}
       />
     </ItemSettingBlock>
-  ))
+  )
 }
 
-export default SyncSetting
+export default observer(SyncSetting)

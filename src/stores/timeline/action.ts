@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2023-04-25 16:37:34
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-02-01 00:56:04
+ * @Last Modified time: 2026-05-06 18:33:06
  */
 import { getTimestamp } from '@utils'
 import { xhr } from '@utils/fetch'
@@ -16,6 +16,7 @@ import Fetch from './fetch'
 import { parseRelativeTimeToTs } from './utils'
 
 import type { Fn, Id, TimeLineScope, TimeLineType, UserId } from '@types'
+
 export default class Action extends Fetch {
   /** 更新隐藏某人动态的截止时间 */
   updateHidden = (hash?: UserId, day: number = 1) => {
@@ -112,6 +113,26 @@ export default class Action extends Fetch {
 
     this.setState({
       [STATE_KEY]: updates
+    })
+  }
+
+  /** 用户的收藏时间线次数追踪 +1 */
+  trackCollectionTimelines = async (userId: UserId) => {
+    const STATE_KEY = 'collectionTimelinesTrack'
+    await this.init(STATE_KEY)
+
+    const ITEM_KEY = userId
+    const count = this[STATE_KEY](ITEM_KEY) + 1
+    this.setState({
+      [STATE_KEY]: {
+        [ITEM_KEY]: count
+      }
+    })
+    this.save(STATE_KEY)
+
+    this.log('trackCollectionTimelines', {
+      userId,
+      count
     })
   }
 

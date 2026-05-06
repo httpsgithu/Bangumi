@@ -2,19 +2,20 @@
  * @Author: czy0729
  * @Date: 2024-03-25 20:22:37
  * @Last Modified by: czy0729
- * @Last Modified time: 2025-04-04 01:55:40
+ * @Last Modified time: 2026-05-06 01:53:30
  */
 import React from 'react'
+import { observer } from 'mobx-react'
 import { Flex, Image, ScrollView, Text } from '@components'
 import { _ } from '@stores'
 import { getTimestamp, lastDate } from '@utils'
-import { ob } from '@utils/decorators'
 import { TEXT_SECTION_INDENT, TEXT_UPDATE_QIAFAN } from '@constants'
-import { FONT_BASE, FONT_STRONG } from '../../ds'
+import { FONT_BASE, FONT_STRONG, REPO_COMMIT_COUNT, REPO_PUBLISH_COUNT } from '../../ds'
 import { memoStyles } from './styles'
 
 function Section1() {
   const styles = memoStyles()
+
   return (
     <>
       <Text {...FONT_BASE}>
@@ -22,9 +23,9 @@ function Section1() {
         <Text {...FONT_STRONG}>
           {lastDate(getTimestamp('2019-02-01'), false).replace('前', '')}
         </Text>
-        。第一次做 App，最初仅为用于练手，后来发现很有趣便一直开发至今。回头一看已有{' '}
-        <Text {...FONT_STRONG}>2700</Text> 次代码提交，超过百万行代码的增改，
-        <Text {...FONT_STRONG}>180</Text> 多次版本发布，用爱发电时间超过万小时。
+        。第一次做 APP，最初仅为用于练手，后来发现很有趣便一直开发至今。回头一看已有{' '}
+        <Text {...FONT_STRONG}>{REPO_COMMIT_COUNT}</Text> 次代码提交，超过百万行代码的增改，
+        <Text {...FONT_STRONG}>{REPO_PUBLISH_COUNT}</Text> 多次版本发布，用爱发电超过数万小时。
       </Text>
       <Flex style={_.mt.md} justify='center'>
         <Image
@@ -50,33 +51,42 @@ function Section1() {
       </Text>
       <Text style={_.mt.sm} {...FONT_BASE}>
         {TEXT_SECTION_INDENT}
-        目前功能已经是够用的，再做更多功能也仅仅是画蛇添足罢了，所以后续方向是倾向于用户反馈和网页的新增功能。最近
-        v7.5 之后的一直在优化迭代一些几年前的代码，这个过程复杂又容易出错，但总算是挺过来了。
+        目前功能已经够还原网页了，做更多功能也仅仅是画蛇添足，但是做加法容易做减法很难。还请不要嫌弃作者只会做加法，我只是希望软件能一直留在你们手机里，就像代步工具解决最后一公里行程一样。
       </Text>
       <Text style={_.mt.sm} {...FONT_BASE}>
         {TEXT_SECTION_INDENT}作为一个第三方客户端，相较于网页 bgm.tv
-        在出发点上可能会存在分歧，客户端的主要目的还是通过聚合各种元素，让用户比网页版更容易发现喜欢的番剧，无任欢迎提各种意见和需求。
+        在出发点上可能会存在分歧，客户端的主要目的还是通过聚合各种元素，让用户比网页版更容易发现喜欢的番剧。作者应该也算是第一批能通过互联网追番的人了，以前上学的时候还使用
+        txt 去记录看到多少集，也许这就是本客户端的一颗种子吧。无任欢迎提各种意见和需求。
       </Text>
       <Text style={_.mt.sm} {...FONT_BASE}>
         {TEXT_SECTION_INDENT}
         <Text {...FONT_STRONG}>
           好看 {`>>`} 好用 {`>`} 速度 {`>>>`} 稳定性
         </Text>{' '}
-        一直都是本客户端的开发理念。若不能接受崩溃，网页版可能更适合你。
+        一直都是本客户端的开发方向。若不能接受崩溃，网页版可能更适合你，当然作者非常鼓励新入站用户尝试使用网页版，能知道网页与客户端的不同之处，理解互相的设计理念。
       </Text>
       <Text style={_.mt.sm} {...FONT_BASE}>
         {TEXT_SECTION_INDENT}您的支持就是作者继续开发下去的动力，觉得好用的不忘到 Github
-        上给星星，这些无形的资产绝对会对作者日后的职业生涯产生重要的帮助。
+        上给星星，这些无形的资产会对我的日后职业生涯产生重要的帮助。尤其是现在这个 AI
+        迅速发展的时代，个人编程能力已经被无形地磨平了，每个人都被强行拉到了同一起跑线，我也只能通过把更多的时间放在想法上面保持竞争性。目前整个客户端
+        vibe code 占比没有超过 5%，但是随着时间推移和技术发展，算好事还是坏事肯定是会发生逆转。
       </Text>
       <Text style={_.mt.sm} {...FONT_BASE}>
-        {TEXT_SECTION_INDENT}2022
-        年以来，因各种你懂的原因，且不说开发新功能，有时候因很多突发的问题，维护客户端的正常使用就已经使人力不从心。目前有打算使用一点资金，在后续的版本中提供更加快速稳定的内容访问服务。
-      </Text>
-      <Text style={_.mt.sm} {...FONT_BASE}>
-        {TEXT_SECTION_INDENT}最近有被人说我是网络乞丐，我寻思我也没赚到多少
-        (笑哭)。作者把几年间绝大部分的业余时间都投入到了开发里面，95%
+        {TEXT_SECTION_INDENT}
+        这几年一直有被人说作者是网络乞丐，我寻思也没赚到多少甚至是亏本的（笑哭）。作者把几年间绝大部分的业余时间都投入到了开发里面，95%
         以上的功能都是免费更新的，就算是余下的 5%
-        非免费功能也是在一定程度上免费提供使用，你要是还有意见那就是你对。后续会开发更多的区分会员的功能，正反馈肯定是可以促进开发的。
+        非免费功能也是在一定程度上免费提供使用，你要是还有意见那就是你对。
+      </Text>
+      <Text style={_.mt.sm} {...FONT_BASE}>
+        {TEXT_SECTION_INDENT}
+        目前能公开的一些数据，这么多年来单安卓，日独立 UV 一直稳定在 5k，启动次数在 10k，PV
+        浏览量（不算退后）在 80k，而且每天上下很少差
+        5%，没什么增长也没什么下跌，作者表示也是没怎么看懂，可能入宅和脱宅的人每年都是一样吧（流汗）。付费率大概在
+        5-8%，了解过其实也符合市面上同类产品数据。
+      </Text>
+      <Text style={_.mt.sm} {...FONT_BASE}>
+        {TEXT_SECTION_INDENT}
+        最后感谢这么多年一直有那么一批用户，都能在发布新版本的第一时间选择无条件更新，只要有这么一批用户坚守，作者就有动力一直更新下去。
       </Text>
       <Text style={_.mt.md} {...FONT_BASE} align='right'>
         最后编辑：{TEXT_UPDATE_QIAFAN}
@@ -85,4 +95,4 @@ function Section1() {
   )
 }
 
-export default ob(Section1)
+export default observer(Section1)

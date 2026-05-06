@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2022-07-18 07:15:41
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-04-21 22:56:30
+ * @Last Modified time: 2026-05-05 22:30:08
  */
 import { rc } from '@utils/dev'
 import { COMPONENT as PARENT } from '../ds'
@@ -13,6 +13,8 @@ export const BLUR_SETTINGS = ['blurBottomTabs', 'blurToast', 'blurModal'] as con
 
 export const TEXTS = {
   theme: {
+    hd: '主题',
+    // information: '整体主题颜色',
     setting: {
       title: '主题',
       information: `长按顶部 LOGO 可快速前往设置，切换主题可能需要重新启动才能正确生效；若屏幕为 AMOLED 选用「纯黑」可能更省电`

@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2022-01-19 15:14:57
  * @Last Modified by: czy0729
- * @Last Modified time: 2025-05-16 15:14:17
+ * @Last Modified time: 2026-05-05 22:08:12
  */
 import React from 'react'
 import { ActionSheet, Text } from '@components'
@@ -33,11 +33,11 @@ function Tinygrail({ filter, open = false }) {
         <ItemSetting
           hd='小圣杯'
           ft={
-            systemStore.setting.tinygrail ? (
-              <Text type='sub' size={15}>
-                开启
+            systemStore.setting.tinygrail && (
+              <Text type='sub' bold>
+                已开启
               </Text>
-            ) : null
+            )
           }
           arrow
           highlight

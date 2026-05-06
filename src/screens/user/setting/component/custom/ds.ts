@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2022-07-18 07:17:53
  * @Last Modified by: czy0729
- * @Last Modified time: 2025-08-19 23:45:28
+ * @Last Modified time: 2026-05-05 22:29:55
  */
 import { rc } from '@utils/dev'
 import { COMPONENT as PARENT } from '../ds'
@@ -10,6 +10,10 @@ import { COMPONENT as PARENT } from '../ds'
 export const COMPONENT = rc(PARENT, 'Custom')
 
 export const TEXTS = {
+  custom: {
+    hd: '定制'
+    // information: '简繁体、文字排版、站龄'
+  },
   cnFirst: {
     title: '优先中文',
     information: '客户端会智能匹配本地历史番剧数据，尽可能使用中文条目名称'

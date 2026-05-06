@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2022-05-11 19:33:22
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-04-20 21:37:10
+ * @Last Modified time: 2026-05-05 20:33:29
  */
 import {
   collectionStore,
@@ -245,7 +245,7 @@ export default class Fetch extends Computed {
     this._fetchTrackUsersInfo = true
   }
 
-  /** 特别关注 */
+  /** 追踪 */
   fetchTrackComments = () => {
     if (!this.subjectTypeValue) return false
 
@@ -254,10 +254,10 @@ export default class Fetch extends Computed {
 
     const fetchs = []
     const now = getTimestamp()
-    userIds.forEach(item => {
-      const collection = collectionStore.usersSubjectCollection(item, this.subjectId)
+    userIds.forEach(userId => {
+      const collection = collectionStore.usersSubjectCollection(userId, this.subjectId)
       if (!collection._loaded || now - Number(collection._loaded) >= H1) {
-        fetchs.push(() => collectionStore.fetchUsersCollection(item, this.subjectId))
+        fetchs.push(() => collectionStore.fetchUsersCollection(userId, this.subjectId))
       }
     })
 

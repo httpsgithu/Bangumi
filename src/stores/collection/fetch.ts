@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2023-04-24 03:01:50
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-03-24 06:44:06
+ * @Last Modified time: 2026-05-04 19:08:55
  */
 import { getTimestamp, info, queue, sleep } from '@utils'
 import { fetchHTML } from '@utils/fetch'
@@ -344,10 +344,7 @@ export default class Fetch extends Computed {
               return
             }
 
-            const collection = await fetchCollectionSingleV0({
-              subjectId,
-              userId: userStore.myId
-            })
+            const collection = await fetchCollectionSingleV0(userStore.myId, subjectId)
             if (collection) results.push(collection)
             lastFetchMS[subjectId] = getTimestamp()
           })
@@ -381,10 +378,13 @@ export default class Fetch extends Computed {
   /** v0 api: 获取对应用户的收藏 */
   fetchUsersCollection = async (username: UserId, subjectId: SubjectId) => {
     try {
-      const data: any = await request(API_USERS_SUBJECT_COLLECTION(username, subjectId))
+      const data: any = await request(API_USERS_SUBJECT_COLLECTION(username, subjectId), null, {
+        auth: false
+      })
       if (data?.updated_at) {
-        const key = 'usersSubjectCollection'
-        const stateKey = `${username}|${subjectId}`
+        const STATE_KEY = 'usersSubjectCollection'
+        const ITEM_KEY = `${username}|${subjectId}` as const
+
         const item = {
           rate: data?.rate || 0,
           comment: data?.comment || '',
@@ -393,17 +393,15 @@ export default class Fetch extends Computed {
           _loaded: getTimestamp()
         }
         this.setState({
-          [key]: {
-            [stateKey]: item
+          [STATE_KEY]: {
+            [ITEM_KEY]: item
           }
         })
-        this.save(key)
+        this.save(STATE_KEY)
         return item
       }
+    } catch {}
 
-      return false
-    } catch (error) {
-      return false
-    }
+    return false
   }
 }

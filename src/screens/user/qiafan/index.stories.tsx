@@ -5,7 +5,7 @@
  * @Last Modified time: 2024-08-06 03:26:24
  */
 import React from 'react'
-import { getStorybookArgs, StorybookList, StorybookSPA } from '@components'
+import { StorybookList, StorybookSPA } from '@components'
 import { Qiafan as Component } from '@screens'
 
 export default {
@@ -17,11 +17,11 @@ export const Qiafan = () => (
   <StorybookSPA>
     <StorybookList
       style={{
-        // @ts-expect-error
+        // @ts-ignore
         overflowY: 'scroll'
       }}
     >
-      <Component {...getStorybookArgs('Qiafan')} />
+      <Component />
     </StorybookList>
   </StorybookSPA>
 )

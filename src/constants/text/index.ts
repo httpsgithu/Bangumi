@@ -2,8 +2,9 @@
  * @Author: czy0729
  * @Date: 2021-02-23 10:40:56
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-04-25 20:54:05
+ * @Last Modified time: 2026-05-06 01:41:12
  */
+import Crypto from '@utils/crypto'
 import { WEB } from '../device'
 
 /** 加载 */
@@ -43,7 +44,7 @@ export const TEXT_UPDATE_TYPERANK = '2026-04-12'
 export const TEXT_UPDATE_NSFW = '2025-11-06'
 
 /** 开发者话语最后更新时间 */
-export const TEXT_UPDATE_QIAFAN = '2024-09'
+export const TEXT_UPDATE_QIAFAN = '2026-05'
 
 /** 找条目数目 */
 export const TEXT_TOTAL = {
@@ -225,6 +226,15 @@ export const TEXT_MENU_TIME_FORMAT_REGULAR = '日期'
 /** 菜单: 本集讨论 */
 export const TEXT_MENU_TOPIC = '本集讨论'
 
+/** 菜单: 追踪TA的动画观看进度 */
+export const TEXT_MENU_TRACK_COLLECTIONS_TIMELINE = '追踪TA的动画观看进度'
+
+/** 菜单: 取消追踪动画观看进度 */
+export const TEXT_MENU_CANCEL_TRACK_COLLECTIONS_TIMELINE = '取消追踪动画观看进度'
+
+/** 菜单: 追踪管理 */
+export const TEXT_MENU_MANAGE_TRACK = '追踪管理'
+
 /** 标记 */
 export const TEXT_BADGES = {
   danger: '🔴',
@@ -235,3 +245,9 @@ export const TEXT_BADGES = {
   yellow: '🟡',
   purple: '🟣'
 } as const
+
+export const TEXT_NEWS_GC = Crypto.get('U2FsdGVkX18vV4hUPCdJbY/D2eIpYRzHSc1F5GyFbc0=')
+
+export const TEXT_NEWS_YM = Crypto.get('U2FsdGVkX19ZRKL0sfshJetA8MSbBGcTu0sbE3TWi+M=')
+
+export const TEXT_NEWS_GS = Crypto.get('U2FsdGVkX18v+G1pp2YBAyzerWroRX+iJZUp875Sz8k=')

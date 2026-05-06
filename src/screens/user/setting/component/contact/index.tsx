@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2022-01-22 16:36:29
  * @Last Modified by: czy0729
- * @Last Modified time: 2024-04-23 20:59:32
+ * @Last Modified time: 2026-05-04 14:46:48
  */
 import React from 'react'
 import { r } from '@utils/dev'
@@ -11,7 +11,6 @@ import { getShows } from '../../utils'
 import Feedback from './feedback'
 import Qiafan from './qiafan'
 import Sponsor from './sponsor'
-import Tips from './tips'
 import Versions from './versions'
 import { COMPONENT, TEXTS } from './ds'
 
@@ -30,7 +29,6 @@ function Contact({ navigation, filter }) {
         {shows.qiafan && <Qiafan navigation={navigation} filter={filter} />}
         {shows.advance && <Sponsor navigation={navigation} filter={filter} />}
         {shows.versions && <Versions navigation={navigation} filter={filter} />}
-        {shows.tips && <Tips navigation={navigation} filter={filter} />}
       </>
     )
   })

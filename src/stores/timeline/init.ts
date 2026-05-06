@@ -2,12 +2,12 @@
  * @Author: czy0729
  * @Date: 2019-07-15 11:07:38
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-01-20 08:22:55
+ * @Last Modified time: 2026-05-06 05:22:23
  */
 import { LIST_EMPTY, MODEL_TIMELINE_SCOPE, MODEL_TIMELINE_TYPE } from '@constants'
 
 import type { TimeLineScope, TimeLineType, UserId } from '@types'
-import type { CollectionsTimeline } from './types'
+import type { CollectionsTimeline, CollectionTimelines } from './types'
 
 export const NAMESPACE = 'Timeline'
 
@@ -54,7 +54,13 @@ export const STATE = {
   hidden: {},
 
   /** 用户最后活跃时间 */
-  active: {} as Record<UserId, number>
+  active: {} as Record<UserId, number>,
+
+  /** 用户的追踪收藏时间线 */
+  collectionTimelines: {} as Record<UserId, CollectionTimelines>,
+
+  /** 用户的收藏时间线次数追踪 */
+  collectionTimelinesTrack: {} as Record<UserId, number>
 }
 
 export const LOADED = {
@@ -62,5 +68,7 @@ export const LOADED = {
   hidden: false,
   likes: false,
   say: false,
-  active: false
+  active: false,
+  collectionTimelines: false,
+  collectionTimelinesTrack: false
 }

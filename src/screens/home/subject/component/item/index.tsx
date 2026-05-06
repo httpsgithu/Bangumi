@@ -4,7 +4,7 @@
  * @Last Modified by: czy0729
  * @Last Modified time: 2026-03-17 23:32:04
  */
-import React from 'react'
+import React, { useCallback } from 'react'
 import { View } from 'react-native'
 import { observer } from 'mobx-react'
 import { InView, ItemComment } from '@_'
@@ -14,7 +14,7 @@ import { COMPONENT, ITEM_HEIGHT, POPOVER_DATA } from './ds'
 import { styles } from './styles'
 
 import type { SubjectCommentsItem } from '@stores/subject/types'
-import type { WithIndex } from '@types'
+import type { Id, UserId, WithIndex } from '@types'
 import type { Ctx } from '../../types'
 
 function Item({
@@ -30,7 +30,23 @@ function Item({
   mainId,
   mainName
 }: WithIndex<SubjectCommentsItem>) {
-  const { $ } = useStore<Ctx>(COMPONENT)
+  const { $, navigation } = useStore<Ctx>(COMPONENT)
+
+  const handleSelect = useCallback(
+    (
+      title: string,
+      userData: {
+        avatar: string
+        userId: UserId
+        userName: string
+      },
+      comment: string,
+      relatedId: Id
+    ) => {
+      $.onTrackUsersCollection(title, userData, comment, relatedId, navigation)
+    },
+    [$, navigation]
+  )
 
   if (getIsBlockedUser(rakuenStore.blockUserIds, userName, userId, `Subject|${$.subjectId}`)) {
     return null
@@ -54,7 +70,7 @@ function Item({
         mainId={mainId}
         mainName={mainName}
         popoverData={POPOVER_DATA[$.type]}
-        onSelect={$.onTrackUsersCollection}
+        onSelect={handleSelect}
       />
     </InView>
   )

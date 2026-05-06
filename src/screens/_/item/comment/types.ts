@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2022-06-17 12:46:26
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-03-17 23:57:00
+ * @Last Modified time: 2026-05-05 20:32:51
  */
 import type { CollectionStatusCn, EventType, Fn, SubjectId, UserId, WithViewStyles } from '@types'
 
@@ -22,7 +22,7 @@ export type Props = WithViewStyles<{
   event?: EventType
   popoverData?: string[] | readonly string[]
 
-  /** 是否特别关注 */
+  /** 是否追踪 */
   like?: boolean
   onSelect?: Fn
 }>

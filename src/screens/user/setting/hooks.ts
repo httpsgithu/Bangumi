@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2024-04-19 16:42:14
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-03-16 23:15:56
+ * @Last Modified time: 2026-05-04 14:26:43
  */
 import { useCallback, useRef, useState } from 'react'
 import { systemStore } from '@stores'
@@ -14,7 +14,7 @@ import type { NavigationProps } from '@types'
 import type { Params, SetSettingKeys, SwitchSettingKeys } from './types'
 
 /** 设置页面逻辑 */
-export function useSettingPage({ route }: NavigationProps<Params>) {
+export function useSettingPage({ navigation, route }: NavigationProps<Params>) {
   /** 设置筛选 */
   const [filter, setFilter] = useState('')
 
@@ -44,6 +44,7 @@ export function useSettingPage({ route }: NavigationProps<Params>) {
   })
 
   return {
+    navigation,
     filter,
     setFilter,
     open,

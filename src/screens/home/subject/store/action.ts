@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2022-05-11 19:38:04
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-04-20 21:26:53
+ * @Last Modified time: 2026-05-05 20:33:27
  */
 import { toJS } from 'mobx'
 import { StatusBar } from '@components'
@@ -15,6 +15,7 @@ import {
   otaStore,
   rakuenStore,
   systemStore,
+  timelineStore,
   uiStore,
   usersStore,
   userStore
@@ -64,8 +65,12 @@ import {
   SITE_WK8,
   SITES,
   TEXT_MENU_BLOCK,
+  TEXT_MENU_CANCEL_TRACK_COLLECTIONS_TIMELINE,
   TEXT_MENU_IGNORE,
+  TEXT_MENU_MANAGE_TRACK,
+  TEXT_MENU_SPLIT,
   TEXT_MENU_TOPIC,
+  TEXT_MENU_TRACK_COLLECTIONS_TIMELINE,
   URL_SPA,
   WEB
 } from '@constants'
@@ -702,10 +707,12 @@ export default class Action extends Fetch {
       userName: string
     },
     comment: string,
-    relatedId: Id
+    relatedId: Id,
+    navigation?: Navigation
   ) => {
     if (!userData?.userId) return false
 
+    // 贴贴
     if (title === TEXT_LIKES) {
       if (!userStore.isLogin) {
         info('请先登录')
@@ -718,21 +725,53 @@ export default class Action extends Fetch {
       return
     }
 
+    // 复制吐槽
     if (title === TEXT_COPY_COMMENT) {
       this.onCopyComment(userData, comment)
       return
     }
 
+    // 屏蔽
     if (title === TEXT_MENU_BLOCK) {
       this.addBlockUser(userData)
       return
     }
 
+    // 绝交
     if (title === TEXT_MENU_IGNORE) {
       this.doBlockUser(userData)
       return
     }
 
+    // 分割线
+    if (title === TEXT_MENU_SPLIT) return
+
+    // 追踪TA的动画观看进度
+    if (title === TEXT_MENU_TRACK_COLLECTIONS_TIMELINE) {
+      systemStore.trackCollectionTimelines(userData.userId)
+      timelineStore.fetchCollectionTimelines(userData.userId, true)
+      return
+    }
+
+    // 取消追踪TA的动画观看进度
+    if (title === TEXT_MENU_CANCEL_TRACK_COLLECTIONS_TIMELINE) {
+      confirm('确定取消?', () => {
+        systemStore.cancelTrackCollectionTimelines(userData.userId)
+      })
+      return
+    }
+
+    // 追踪管理
+    if (title === TEXT_MENU_MANAGE_TRACK) {
+      if (navigation) {
+        navigation.push('Setting', {
+          open: 'Track'
+        })
+      }
+      return
+    }
+
+    // 追踪特定用户条目类型吐槽
     if (this.type) {
       const { avatar, userId, userName } = userData || {}
       systemStore.trackUsersCollection(userId, this.subjectTypeValue)
@@ -743,7 +782,7 @@ export default class Action extends Fetch {
       })
       collectionStore.fetchUsersCollection(userId, this.subjectId)
 
-      t('条目.特别关注', {
+      t('条目.追踪', {
         subjectId: this.subjectId,
         type: this.subjectTypeValue,
         userId
@@ -751,20 +790,17 @@ export default class Action extends Fetch {
     }
   }
 
-  /** 取消追踪特定用户收藏相关信息 */
-  onCancelTrackUsersCollection = (
-    _title: string,
-    userData: {
-      avatar: string
-      userId: UserId
-      userName: string
-    }
-  ) => {
+  /** 取消追踪特定用户条目类型吐槽 */
+  onCancelTrackUsersCollection = (userData: {
+    avatar: string
+    userId: UserId
+    userName: string
+  }) => {
     if (this.type && userData?.userId) {
       const { userId } = userData || {}
       systemStore.cancelTrackUsersCollection(userId, this.subjectTypeValue)
 
-      t('条目.取消特别关注', {
+      t('条目.取消追踪', {
         subjectId: this.subjectId,
         type: this.subjectTypeValue,
         userId
@@ -782,7 +818,6 @@ export default class Action extends Fetch {
     comment: string
   ) => {
     copy(comment, `已复制 ${userData?.userName} 的吐槽`)
-    feedback()
   }
 
   /** 拼图分享 */

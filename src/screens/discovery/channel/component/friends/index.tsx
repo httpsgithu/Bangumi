@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2020-05-04 16:32:45
  * @Last Modified by: czy0729
- * @Last Modified time: 2024-11-17 07:29:20
+ * @Last Modified time: 2026-05-05 20:35:34
  */
 import React from 'react'
 import { View } from 'react-native'
@@ -13,10 +13,11 @@ import { _, useStore } from '@stores'
 import { findSubjectCn, stl } from '@utils'
 import { ob } from '@utils/decorators'
 import { t } from '@utils/fetch'
-import { Ctx } from '../../types'
 import { COVER_HEIGHT_SM, COVER_WIDTH_SM } from '../rank/ds'
 import { COMPONENT } from './ds'
 import { memoStyles } from './styles'
+
+import type { Ctx } from '../../types'
 
 function Friends() {
   const { $, navigation } = useStore<Ctx>()

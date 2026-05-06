@@ -22,8 +22,5 @@ export const TEXTS = {
   },
   versions: {
     hd: '更新内容'
-  },
-  tips: {
-    hd: '特色功能'
   }
 } as const

@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2023-04-25 14:05:35
  * @Last Modified by: czy0729
- * @Last Modified time: 2025-05-20 07:08:00
+ * @Last Modified time: 2026-05-05 19:43:17
  */
 import { getTimestamp } from '@utils'
 import { D3 } from '@constants'
@@ -65,17 +65,18 @@ export default class Actions extends Fetch {
 
   /** 更新用户简短信息 */
   updateUsersInfo = async (item: { avatar: string; userId: UserId; userName: string }) => {
-    const key = 'usersInfo'
-    await this.init(key)
+    const STATE_KEY = 'usersInfo'
+    const ITEM_KEY = item.userId
+    await this.init(STATE_KEY)
 
     this.setState({
-      [key]: {
-        [item.userId]: {
+      [STATE_KEY]: {
+        [ITEM_KEY]: {
           ...item,
           _loaded: getTimestamp()
         }
       }
     })
-    this.save(key)
+    this.save(STATE_KEY)
   }
 }
