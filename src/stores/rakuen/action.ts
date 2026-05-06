@@ -739,25 +739,43 @@ export default class Action extends Fetch {
   }
 
   /** 屏蔽用户的屏蔽次数 +1 */
-  trackBlockedUser = (userId: UserId) => {
-    const key = 'blockedUsersTrack'
+  trackBlockedUser = async (userId: UserId) => {
+    const STATE_KEY = 'blockedUsersTrack'
+    await this.init(STATE_KEY)
+
+    const ITEM_KEY = userId
+    const count = this[STATE_KEY](ITEM_KEY) + 1
     this.setState({
-      [key]: {
-        [userId]: this.blockedUsersTrack(userId) + 1
+      [STATE_KEY]: {
+        [ITEM_KEY]: count
       }
     })
-    this.save(key)
+    this.save(STATE_KEY)
+
+    this.log('trackBlockedUser', {
+      userId,
+      count
+    })
   }
 
   /** 屏蔽用户的屏蔽次数 +1 */
-  trackBlocked = (keyword: string) => {
-    const key = 'blockedTrack'
+  trackBlocked = async (keyword: string) => {
+    const STATE_KEY = 'blockedTrack'
+    await this.init(STATE_KEY)
+
+    const ITEM_KEY = keyword
+    const count = this[STATE_KEY](ITEM_KEY) + 1
     this.setState({
-      [key]: {
-        [keyword]: this.blockedTrack(keyword) + 1
+      [STATE_KEY]: {
+        [ITEM_KEY]: count
       }
     })
-    this.save(key)
+    this.save(STATE_KEY)
+
+    this.log('trackBlocked', {
+      keyword,
+      count
+    })
   }
 
   /** 更新书签 */

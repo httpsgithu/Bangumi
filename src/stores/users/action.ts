@@ -5,12 +5,12 @@
  * @Last Modified time: 2026-05-05 19:43:17
  */
 import { getTimestamp } from '@utils'
+import { fetchUsersV0 } from '@utils/fetch.v0'
 import { D3 } from '@constants'
 import userStore from '../user'
 import Fetch from './fetch'
 
 import type { UserId } from '@types'
-
 export default class Actions extends Fetch {
   autoUpdateAvatars = async (
     list: any[],
@@ -78,5 +78,22 @@ export default class Actions extends Fetch {
       }
     })
     this.save(STATE_KEY)
+  }
+
+  /** 从 v0 接口获取用户信息后, 更新用户简短信息返回 true, 若用户不存在则返回 false */
+  getUsersThenUpdateInfo = async (userId: UserId) => {
+    const users = await fetchUsersV0(userId, {
+      auth: false
+    })
+    if (users?.username && users?.avatar && users?.nickname) {
+      this.updateUsersInfo({
+        avatar: users.avatar.large,
+        userId: users.username,
+        userName: users.nickname
+      })
+      return true
+    }
+
+    return false
   }
 }

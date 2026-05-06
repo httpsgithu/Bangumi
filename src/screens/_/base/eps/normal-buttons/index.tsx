@@ -8,7 +8,7 @@ import React from 'react'
 import { View } from 'react-native'
 import { observer } from 'mobx-react'
 import { Flex } from '@components'
-import { subjectStore } from '@stores'
+import { subjectStore, systemStore } from '@stores'
 import { MODEL_EP_TYPE } from '@constants'
 import Button from '../button'
 import SpButtons from '../sp-buttons'
@@ -26,6 +26,8 @@ function NormalButtons({ props, eps }) {
     }
   })
 
+  const showTimelineAvatars = !!systemStore.setting.collectionTimelines?.length
+
   return (
     <Flex wrap='wrap' align='start'>
       {itemsNormal.map((item, index) => {
@@ -34,12 +36,14 @@ function NormalButtons({ props, eps }) {
 
         return (
           <View key={item.id}>
-            <TimelineAvatars
-              subjectId={props.subjectId}
-              index={index}
-              sort={item.sort}
-              isSide={isSide}
-            />
+            {showTimelineAvatars && (
+              <TimelineAvatars
+                subjectId={props.subjectId}
+                index={index}
+                sort={item.sort}
+                isSide={isSide}
+              />
+            )}
             <Button
               props={props}
               item={item}

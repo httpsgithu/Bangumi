@@ -1,22 +1,20 @@
 /*
  * @Author: czy0729
- * @Date: 2026-05-05 04:55:01
+ * @Date: 2026-05-06 05:15:53
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-05-06 19:02:23
+ * @Last Modified time: 2026-05-06 19:02:13
  */
 import React, { useCallback, useState } from 'react'
 import { View } from 'react-native'
 import { observer } from 'mobx-react'
 import { Flex, Iconfont, Input, Text, Touchable } from '@components'
 import { UserStatusAvatar } from '@_'
-import { _, subjectStore, systemStore, usersStore, userStore } from '@stores'
-import { confirm, info, titleCase } from '@utils'
+import { _, rakuenStore, usersStore, userStore } from '@stores'
+import { confirm, info } from '@utils'
 import Block from '../../../block'
 import { memoStyles } from './styles'
 
-import type { TrackIds } from '@stores/system/types'
-
-function BlockItem({ navigation, item, setFalse }) {
+function BlockItem({ navigation, setFalse }) {
   const [keyword, setKeyword] = useState('')
 
   const handleChange = useCallback((text: string) => {
@@ -36,31 +34,25 @@ function BlockItem({ navigation, item, setFalse }) {
 
     const result = await usersStore.getUsersThenUpdateInfo(keyword)
     if (result) {
-      systemStore.trackUsersCollection(keyword, item.label)
+      rakuenStore.trackUsersComment(keyword)
       setKeyword('')
     } else {
       info('没有查询到此用户')
     }
-  }, [item.label, keyword])
+  }, [keyword])
 
   const styles = memoStyles()
 
-  const STATE_KEY = `comment${titleCase(item.label)}` as const
-  const value = systemStore.setting[STATE_KEY] as TrackIds
+  const value = rakuenStore.setting.commentTrack
 
   return (
     <Block style={styles.block}>
-      <Text type='sub' size={13} bold>
-        {item.title}
-      </Text>
-
-      <View style={_.mt.xs}>
+      <View>
         {value.length ? (
           value.map(userId => {
             const users = usersStore.usersInfo(userId)
-            const trackCount = subjectStore.commentTrack(userId, item.label)
             const textProps = {
-              size: trackCount ? 12 : 13,
+              size: 13,
               bold: true,
               numbersOfLine: 1
             } as const
@@ -93,18 +85,11 @@ function BlockItem({ navigation, item, setFalse }) {
                       @{userId}
                     </Text>
                   </Text>
-                  {!!trackCount && (
-                    <Text style={_.mt.xxs} type='sub' size={10} bold>
-                      已显示 {trackCount} 次
-                    </Text>
-                  )}
                 </Flex.Item>
                 <Touchable
                   style={_.ml.md}
                   onPress={() => {
-                    confirm('确定取消?', () =>
-                      systemStore.cancelTrackUsersCollection(userId, item.label)
-                    )
+                    confirm('确定取消?', () => rakuenStore.cancelTrackUsersComment(userId))
                   }}
                 >
                   <Flex style={styles.icon} justify='center'>

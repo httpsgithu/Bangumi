@@ -13,11 +13,13 @@ import { useBoolean } from '@utils/hooks'
 import { getShows } from '../../utils'
 import CollectionTimelines from './collection-timelines'
 import Comment from './comment'
+import Topic from './topic'
 import { COMPONENT, TEXTS } from './ds'
 import { styles } from './styles'
 
 import type { WithNavigation } from '@types'
 import type { WithFilterProps } from '../../types'
+
 /** 追踪 */
 function Track({
   navigation,
@@ -49,6 +51,7 @@ function Track({
           <CollectionTimelines navigation={navigation} filter={filter} setFalse={setFalse} />
         )}
         {shows.comment && <Comment navigation={navigation} filter={filter} setFalse={setFalse} />}
+        {shows.topic && <Topic navigation={navigation} filter={filter} setFalse={setFalse} />}
       </ActionSheet>
     </>
   )

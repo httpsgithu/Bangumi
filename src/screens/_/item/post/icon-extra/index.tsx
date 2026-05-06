@@ -8,7 +8,7 @@ import React, { useCallback, useMemo, useRef } from 'react'
 import { View } from 'react-native'
 import { observer } from 'mobx-react'
 import { Flex, Iconfont } from '@components'
-import { _, rakuenStore, uiStore, userStore, useStore } from '@stores'
+import { _, rakuenStore, uiStore, usersStore, userStore, useStore } from '@stores'
 import {
   confirm,
   copy,
@@ -141,6 +141,7 @@ function IconExtra({
           break
 
         case ACTION_TRACK:
+          usersStore.getUsersThenUpdateInfo(userId)
           rakuenStore.trackUsersComment(userId)
 
           t('帖子.追踪', {

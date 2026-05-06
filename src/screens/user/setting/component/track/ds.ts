@@ -22,5 +22,9 @@ export const TEXTS = {
   comment: {
     hd: '追踪 TA 的评论 (条目)',
     information: '每次首次进入条目页，会对追踪的用户批量发请求，若有数据会在吐槽顶部显示对应评论'
+  },
+  topic: {
+    hd: '追踪 TA 的帖子回复',
+    information: '帖子回复上方会对追踪用户的回复进行独立分组'
   }
 } as const

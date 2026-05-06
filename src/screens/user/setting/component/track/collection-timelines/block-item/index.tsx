@@ -12,7 +12,6 @@ import { UserStatusAvatar } from '@_'
 import { _, systemStore, timelineStore, usersStore, userStore } from '@stores'
 import { confirm, info } from '@utils'
 import Block from '../../../block'
-import { getUsersThenUpdateInfo } from '../../utils'
 import { memoStyles } from './styles'
 
 function BlockItem({ navigation, setFalse }) {
@@ -33,7 +32,7 @@ function BlockItem({ navigation, setFalse }) {
       return
     }
 
-    const result = await getUsersThenUpdateInfo(keyword)
+    const result = await usersStore.getUsersThenUpdateInfo(keyword)
     if (result) {
       systemStore.trackCollectionTimelines(keyword)
       timelineStore.fetchCollectionTimelines(keyword, true)
@@ -132,6 +131,11 @@ function BlockItem({ navigation, setFalse }) {
           </Flex>
         </Touchable>
       </Flex>
+
+      <Text style={_.mb.sm} type='icon' size={11} bold>
+        {' '}
+        PS：此追踪请按需使用，会增加每次冷启动的请求量
+      </Text>
     </Block>
   )
 }

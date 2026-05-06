@@ -4,7 +4,7 @@
  * @Last Modified by: czy0729
  * @Last Modified time: 2026-05-05 20:34:03
  */
-import { systemStore, usersStore } from '@stores'
+import { rakuenStore, systemStore, usersStore } from '@stores'
 import { titleCase } from '@utils'
 import { SUBJECT_TYPE } from '@constants'
 
@@ -22,10 +22,15 @@ export function updateTrackUserInfo(userInfo: typeof INIT_USER_INFO) {
     const userIds = systemStore.setting[`comment${titleCase(item.label)}`] as UserId[]
     if (userIds?.length && userIds.findIndex(i => i === userInfo.username) !== -1) flag = true
   })
+
+  if (!flag) {
+    if (rakuenStore.setting.commentTrack.includes(userInfo.username)) flag = true
+  }
+
   if (!flag) return
 
   usersStore.updateUsersInfo({
-    avatar: userInfo.avatar.medium,
+    avatar: userInfo.avatar.large,
     userId: userInfo.username,
     userName: userInfo.nickname
   })
