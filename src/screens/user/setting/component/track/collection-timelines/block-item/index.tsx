@@ -1,23 +1,21 @@
 /*
  * @Author: czy0729
- * @Date: 2026-05-05 04:55:01
+ * @Date: 2026-05-06 05:15:53
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-05-05 21:20:55
+ * @Last Modified time: 2026-05-06 19:02:13
  */
 import React, { useCallback, useState } from 'react'
 import { View } from 'react-native'
 import { observer } from 'mobx-react'
 import { Flex, Iconfont, Input, Text, Touchable } from '@components'
 import { UserStatusAvatar } from '@_'
-import { _, subjectStore, systemStore, usersStore, userStore } from '@stores'
-import { confirm, info, titleCase } from '@utils'
-import Block from '../../block'
-import { getUsersThenUpdateInfo } from '../utils'
+import { _, systemStore, timelineStore, usersStore, userStore } from '@stores'
+import { confirm, info } from '@utils'
+import Block from '../../../block'
+import { getUsersThenUpdateInfo } from '../../utils'
 import { memoStyles } from './styles'
 
-import type { TrackIds } from '@stores/system/types'
-
-function BlockItem({ navigation, item, setFalse }) {
+function BlockItem({ navigation, setFalse }) {
   const [keyword, setKeyword] = useState('')
 
   const handleChange = useCallback((text: string) => {
@@ -37,34 +35,37 @@ function BlockItem({ navigation, item, setFalse }) {
 
     const result = await getUsersThenUpdateInfo(keyword)
     if (result) {
-      systemStore.trackUsersCollection(keyword, item.label)
+      systemStore.trackCollectionTimelines(keyword)
+      timelineStore.fetchCollectionTimelines(keyword, true)
       setKeyword('')
     } else {
       info('没有查询到此用户')
     }
-  }, [item.label, keyword])
+  }, [keyword])
 
   const styles = memoStyles()
 
-  const STATE_KEY = `comment${titleCase(item.label)}` as const
-  const value = systemStore.setting[STATE_KEY] as TrackIds
+  const value = systemStore.setting.collectionTimelines
 
   return (
     <Block style={styles.block}>
-      <Text type='sub' size={13} bold>
-        {item.title}
-      </Text>
-
-      <View style={_.mt.xs}>
+      <View>
         {value.length ? (
           value.map(userId => {
             const users = usersStore.usersInfo(userId)
-            const trackCount = subjectStore.commentTrack(userId, item.label)
+            const trackCount = timelineStore.collectionTimelinesTrack(userId)
             const textProps = {
               size: trackCount ? 12 : 13,
               bold: true,
               numbersOfLine: 1
             } as const
+            const handlePress = () => {
+              setFalse()
+
+              setTimeout(() => {
+                navigation.push('Zone', { userId })
+              }, 160)
+            }
 
             return (
               <Flex key={userId} style={_.mt.sm}>
@@ -78,18 +79,10 @@ function BlockItem({ navigation, item, setFalse }) {
                   size={30}
                   radius={_.radiusXs}
                   mini
+                  onPress={handlePress}
                 />
                 <Flex.Item style={styles.item}>
-                  <Text
-                    {...textProps}
-                    onPress={() => {
-                      setFalse()
-
-                      setTimeout(() => {
-                        navigation.push('Zone', { userId })
-                      }, 160)
-                    }}
-                  >
+                  <Text {...textProps} onPress={handlePress}>
                     {users.userName ? `${users.userName} ` : ''}
                     <Text {...textProps} type={users.userName ? 'sub' : 'desc'}>
                       @{userId}
@@ -97,16 +90,14 @@ function BlockItem({ navigation, item, setFalse }) {
                   </Text>
                   {!!trackCount && (
                     <Text style={_.mt.xxs} type='sub' size={10} bold>
-                      已追踪到 {trackCount} 次
+                      已显示 {trackCount} 次
                     </Text>
                   )}
                 </Flex.Item>
                 <Touchable
                   style={_.ml.md}
                   onPress={() => {
-                    confirm('确定取消?', () =>
-                      systemStore.cancelTrackUsersCollection(userId, item.label)
-                    )
+                    confirm('确定取消?', () => systemStore.cancelTrackCollectionTimelines(userId))
                   }}
                 >
                   <Flex style={styles.icon} justify='center'>

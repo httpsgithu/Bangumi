@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2026-05-02 10:06:29
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-05-05 21:13:09
+ * @Last Modified time: 2026-05-06 18:34:52
  */
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { View } from 'react-native'
@@ -21,12 +21,13 @@ import { systemStore, timelineStore } from '@stores'
 import { lastDate, stl } from '@utils'
 import { useNavigation } from '@utils/hooks'
 import { TEXT_MENU_MANAGE_TRACK, withSplit } from '@constants'
+import { ClientTrack } from '../../client-track'
 import { ANIM_DURATION_PER_AVATAR, AVATAR_SIZE, MOVE_DISTANCE, PAUSE_RATIO } from './ds'
 import { memoStyles } from './styles'
 
 import type { Props } from './types'
 
-function TimelineAvatars({ subjectId, sort, isSide }: Props) {
+function TimelineAvatars({ subjectId, index, sort, isSide }: Props) {
   const navigation = useNavigation()
 
   const styles = memoStyles()
@@ -34,7 +35,9 @@ function TimelineAvatars({ subjectId, sort, isSide }: Props) {
   // 数据源
   const userIds = systemStore.setting.collectionTimelines || []
   const timelines = timelineStore.collectionTimelines(userIds, subjectId)
-  const users = (Array.isArray(timelines) ? timelines : []).filter(t => t && t.sort.eps === sort)
+  const users = (Array.isArray(timelines) ? timelines : []).filter(
+    t => t && (t.sort?.eps === sort || t.sort?.eps === index + 1)
+  )
 
   const count = users.length
   const progress = useSharedValue(0)
@@ -132,6 +135,7 @@ function TimelineAvatars({ subjectId, sort, isSide }: Props) {
               {users.map(u => (
                 <View key={u.userId} style={styles.avatarWrapper}>
                   <Avatar src={u.avatar} size={AVATAR_SIZE} placeholder={false} skeleton={false} />
+                  <ClientTrack id='collectionTimelines' userId={u.userId} subjectId={subjectId} />
                 </View>
               ))}
 

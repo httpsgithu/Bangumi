@@ -18,5 +18,6 @@ export type Props = WithNavigation<
     radius?: ImageProps['radius']
     mini?: boolean
     event?: EventType
+    onPress?: ImageProps['onPress']
   }>
 >

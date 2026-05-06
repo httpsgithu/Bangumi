@@ -8,6 +8,7 @@ import type { SubjectId } from '@types'
 
 export type Props = {
   subjectId: SubjectId
+  index: number
   sort: number
   isSide?: boolean
 }

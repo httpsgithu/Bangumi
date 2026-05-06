@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2023-02-14 03:18:33
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-05-05 22:30:12
+ * @Last Modified time: 2026-05-06 05:43:21
  */
 import { rc } from '@utils/dev'
 import { COMPONENT as PARENT } from '../ds'
@@ -13,6 +13,11 @@ export const TEXTS = {
   track: {
     hd: '追踪'
     // information: '追踪他人吐槽评论、进度、小组回复'
+  },
+  collectionTimelines: {
+    hd: '追踪 TA 的动画进度',
+    information:
+      '定期获取追踪用户的在看、看过动画，获取具体看到多少话，在章节按钮旁显示该用户头像，可以营造出一起追番、了解用户收看情况等效果'
   },
   comment: {
     hd: '追踪 TA 的评论 (条目)',

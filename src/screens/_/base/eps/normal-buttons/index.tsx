@@ -34,7 +34,12 @@ function NormalButtons({ props, eps }) {
 
         return (
           <View key={item.id}>
-            <TimelineAvatars subjectId={props.subjectId} sort={index + 1} isSide={isSide} />
+            <TimelineAvatars
+              subjectId={props.subjectId}
+              index={index}
+              sort={item.sort}
+              isSide={isSide}
+            />
             <Button
               props={props}
               item={item}

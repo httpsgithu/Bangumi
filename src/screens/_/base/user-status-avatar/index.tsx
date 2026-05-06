@@ -28,7 +28,8 @@ export const UserStatusAvatar = observer(
     size,
     radius,
     mini,
-    event
+    event,
+    onPress
   }: UserStatusAvatarProps) => {
     const navigationRef = useNavigation(COMPONENT) || navigation
 
@@ -44,6 +45,7 @@ export const UserStatusAvatar = observer(
             size={size}
             radius={radius}
             event={event}
+            onPress={onPress}
           />
           <Iconfont style={styles.favor} name='md-favorite' color={_.colorMain} size={12} />
         </View>
@@ -61,6 +63,7 @@ export const UserStatusAvatar = observer(
             size={size}
             radius={radius}
             event={event}
+            onPress={onPress}
           />
         </UserStatus>
       </View>

@@ -152,15 +152,24 @@ export default class Action extends Fetch {
   }
 
   /** 追踪TA的评论次数追踪 +1 */
-  trackComment = (userId: UserId, type: SubjectType) => {
+  trackComment = async (userId: UserId, type: SubjectType) => {
     const STATE_KEY = 'commentTrack'
+    await this.init(STATE_KEY)
+
     const ITEM_ARGS = [userId, type] as const
     const ITEM_KEY = ITEM_ARGS.join('|')
+    const count = this[STATE_KEY](...ITEM_ARGS) + 1
     this.setState({
       [STATE_KEY]: {
-        [ITEM_KEY]: this[STATE_KEY](...ITEM_ARGS) + 1
+        [ITEM_KEY]: count
       }
     })
     this.save(STATE_KEY)
+
+    this.log('trackComment', {
+      userId,
+      type,
+      count
+    })
   }
 }

@@ -7,9 +7,9 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { Component, Divider } from '@components'
-import { InView, ItemComment } from '@_'
+import { ClientTrack, InView, ItemComment } from '@_'
 import { _, collectionStore, systemStore, timelineStore, usersStore, useStore } from '@stores'
-import { getTimestamp, lastDate, titleCase } from '@utils'
+import { confirm, getTimestamp, lastDate, titleCase } from '@utils'
 import {
   MODEL_COLLECTION_STATUS,
   TEXT_MENU_CANCEL_TRACK_COLLECTIONS_TIMELINE,
@@ -70,41 +70,56 @@ function TrackComment() {
           popoverData.push(TEXT_MENU_MANAGE_TRACK)
 
           return (
-            <ItemComment
-              key={`${userId}|${userInfo.avatar}|${userInfo.userName}`}
-              style={styles.item}
-              event={event}
-              time={lastDate(getTimestamp(collection.update_at))}
-              avatar={userInfo.avatar}
-              userId={userId}
-              userName={userInfo.userName}
-              star={systemStore.setting.hideScore ? undefined : collection.rate}
-              status={status}
-              comment={String(collection.comment).replace(/[\r\n]/g, '')}
-              popoverData={popoverData}
-              like
-              onSelect={(title, userData) => {
-                if (title === TEXT_MENU_MANAGE_TRACK) {
-                  navigation.push('Setting', {
-                    open: 'Track'
+            <React.Fragment key={`${userId}|${userInfo.avatar}|${userInfo.userName}`}>
+              <ItemComment
+                style={styles.item}
+                event={event}
+                time={lastDate(getTimestamp(collection.update_at))}
+                avatar={userInfo.avatar}
+                userId={userId}
+                userName={userInfo.userName}
+                star={systemStore.setting.hideScore ? undefined : collection.rate}
+                status={status}
+                comment={String(collection.comment).replace(/[\r\n]/g, '')}
+                popoverData={popoverData}
+                like
+                onSelect={(title, userData) => {
+                  // 追踪TA的动画观看进度
+                  if (title === TEXT_MENU_TRACK_COLLECTIONS_TIMELINE) {
+                    systemStore.trackCollectionTimelines(userId)
+                    timelineStore.fetchCollectionTimelines(userId, true)
+                    return
+                  }
+
+                  // 取消追踪TA的动画观看进度
+                  if (title === TEXT_MENU_CANCEL_TRACK_COLLECTIONS_TIMELINE) {
+                    confirm('确定取消?', () => {
+                      systemStore.cancelTrackCollectionTimelines(userId)
+                    })
+                    return
+                  }
+
+                  // 追踪管理
+                  if (title === TEXT_MENU_MANAGE_TRACK) {
+                    navigation.push('Setting', {
+                      open: 'Track'
+                    })
+                    return
+                  }
+
+                  // 取消追踪特定用户条目类型吐槽
+                  confirm('确定取消?', () => {
+                    $.onCancelTrackUsersCollection(userData)
                   })
-                  return
-                }
-
-                if (title === TEXT_MENU_CANCEL_TRACK_COLLECTIONS_TIMELINE) {
-                  systemStore.cancelTrackCollectionTimelines(userId)
-                  return
-                }
-
-                if (title === TEXT_MENU_TRACK_COLLECTIONS_TIMELINE) {
-                  systemStore.trackCollectionTimelines(userId)
-                  timelineStore.fetchCollectionTimelines(userId, true)
-                  return
-                }
-
-                $.onCancelTrackUsersCollection(userData)
-              }}
-            />
+                }}
+              />
+              <ClientTrack
+                id='trackComment'
+                userId={userId}
+                subjectId={$.subjectId}
+                type={$.subjectTypeValue}
+              />
+            </React.Fragment>
           )
         })}
         <Divider />

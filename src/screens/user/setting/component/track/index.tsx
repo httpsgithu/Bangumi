@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2023-02-14 03:18:20
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-05-05 22:26:11
+ * @Last Modified time: 2026-05-06 05:41:05
  */
 import React from 'react'
 import { observer } from 'mobx-react'
@@ -11,13 +11,13 @@ import { ItemSetting } from '@_'
 import { r } from '@utils/dev'
 import { useBoolean } from '@utils/hooks'
 import { getShows } from '../../utils'
+import CollectionTimelines from './collection-timelines'
 import Comment from './comment'
 import { COMPONENT, TEXTS } from './ds'
 import { styles } from './styles'
 
 import type { WithNavigation } from '@types'
 import type { WithFilterProps } from '../../types'
-
 /** 追踪 */
 function Track({
   navigation,
@@ -45,6 +45,9 @@ function Track({
         height={760}
         onClose={setFalse}
       >
+        {shows.collectionTimelines && (
+          <CollectionTimelines navigation={navigation} filter={filter} setFalse={setFalse} />
+        )}
         {shows.comment && <Comment navigation={navigation} filter={filter} setFalse={setFalse} />}
       </ActionSheet>
     </>

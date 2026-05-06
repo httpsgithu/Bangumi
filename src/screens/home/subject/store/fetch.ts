@@ -257,15 +257,7 @@ export default class Fetch extends Computed {
     userIds.forEach(userId => {
       const collection = collectionStore.usersSubjectCollection(userId, this.subjectId)
       if (!collection._loaded || now - Number(collection._loaded) >= H1) {
-        fetchs.push(async () => {
-          const result = await collectionStore.fetchUsersCollection(userId, this.subjectId)
-          if (result) {
-            setTimeout(() => {
-              subjectStore.trackComment(userId, this.subjectTypeValue)
-            }, 0)
-          }
-          return result
-        })
+        fetchs.push(() => collectionStore.fetchUsersCollection(userId, this.subjectId))
       }
     })
 

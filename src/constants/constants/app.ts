@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2024-09-02 11:54:41
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-05-05 20:30:03
+ * @Last Modified time: 2026-05-06 06:24:35
  */
 
 /** App ID https://bgm.tv/dev/app */
@@ -47,10 +47,10 @@ export const APP_FREE_TRACK_COLLECTION = 2
 export const APP_FREE_TRACK_COLLECTION_TIMELINES = 2
 
 /** 高级会员追踪条目吐槽用户最大数 */
-export const APP_ADVANCE_TRACK_COLLECTION = 5
+export const APP_ADVANCE_TRACK_COLLECTION = 10
 
 /** 高级会员追踪用户收藏时间线最大数 */
-export const APP_ADVANCE_TRACK_COLLECTION_TIMELINES = 5
+export const APP_ADVANCE_TRACK_COLLECTION_TIMELINES = 10
 
 /** 普通会员追踪超展开用户最大数 */
 export const APP_FREE_TRACK_COMMENT = 2

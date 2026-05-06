@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2019-07-15 11:07:38
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-05-04 18:38:44
+ * @Last Modified time: 2026-05-06 05:22:23
  */
 import { LIST_EMPTY, MODEL_TIMELINE_SCOPE, MODEL_TIMELINE_TYPE } from '@constants'
 
@@ -69,5 +69,6 @@ export const LOADED = {
   likes: false,
   say: false,
   active: false,
-  collectionTimelines: false
+  collectionTimelines: false,
+  collectionTimelinesTrack: false
 }

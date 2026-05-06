@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2026-05-04 15:15:33
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-05-05 21:32:54
+ * @Last Modified time: 2026-05-06 05:12:06
  */
 import React from 'react'
 import { observer } from 'mobx-react'
@@ -10,7 +10,7 @@ import { ItemSetting } from '@_'
 import { SUBJECT_TYPE } from '@constants'
 import { TEXTS } from '../ds'
 import { getYuqueThumbs } from '../../../utils'
-import BlockItem from '../block-item'
+import BlockItem from './block-item'
 
 function Comment({ navigation, filter, setFalse }) {
   return (

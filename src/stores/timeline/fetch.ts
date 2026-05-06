@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2023-04-25 16:29:42
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-05-04 13:31:35
+ * @Last Modified time: 2026-05-06 05:05:58
  */
 import { getTimestamp, queue } from '@utils'
 import { fetchHTML } from '@utils/fetch'
@@ -307,7 +307,11 @@ export default class Fetch extends Computed {
             auth: false
           })
         ]
-        this.log('fetchCollectionTimelines', data.userId, 'anime', '3')
+        this.log('fetchCollectionTimelines', {
+          userId: data.userId,
+          type: 'anime',
+          status: '3'
+        })
 
         // 如果 refresh 为 true，额外加入状态 '2' 的请求
         if (refresh) {
@@ -316,7 +320,11 @@ export default class Fetch extends Computed {
               auth: false
             })
           )
-          this.log('fetchCollectionTimelines', data.userId, 'anime', '2')
+          this.log('fetchCollectionTimelines', {
+            userId: data.userId,
+            type: 'anime',
+            status: '2'
+          })
         }
 
         const results = await Promise.all(promises)
