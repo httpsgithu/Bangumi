@@ -2,14 +2,15 @@
  * @Author: czy0729
  * @Date: 2022-01-20 11:42:01
  * @Last Modified by: czy0729
- * @Last Modified time: 2025-09-13 11:43:47
+ * @Last Modified time: 2026-05-05 22:29:19
  */
 import React, { useCallback, useRef } from 'react'
+import { observer } from 'mobx-react'
 import { ActionSheet, Heatmap } from '@components'
 import { ItemSetting } from '@_'
 import { systemStore } from '@stores'
 import { r } from '@utils/dev'
-import { useBoolean, useObserver } from '@utils/hooks'
+import { useBoolean } from '@utils/hooks'
 import { IOS } from '@constants'
 import { getShows } from '../../utils'
 import CnFirst from '../custom/cn-first'
@@ -20,15 +21,18 @@ import Webhook from './webhook'
 import { COMPONENT, TEXTS } from './ds'
 
 import type { ScrollTo } from '@components'
+import type { WithNavigation } from '@types'
+import type { WithFilterProps } from '../../types'
 
 /** 其他 (之前是翻译, 已合并大部分功能于此项) */
-function Katakana({ navigation, filter }) {
+function Katakana({ navigation, filter }: WithNavigation<WithFilterProps>) {
   r(COMPONENT)
 
   const { state, setTrue, setFalse } = useBoolean(false)
   const shows = getShows(filter, TEXTS)
 
   const scrollToRef = useRef<ScrollTo>(null)
+
   const handleForwardRef = useCallback((scrollTo: ScrollTo) => {
     scrollToRef.current = scrollTo
   }, [])
@@ -42,37 +46,35 @@ function Katakana({ navigation, filter }) {
     }
   }, [])
 
-  return useObserver(() => {
-    if (!shows) return null
+  if (!shows) return null
 
-    return (
-      <>
-        <ItemSetting hd='其他' arrow highlight filter={filter} onPress={setTrue}>
-          <Heatmap id='设置.切换' title='片假名终结者' />
-        </ItemSetting>
-        <ActionSheet
-          forwardRef={handleForwardRef}
-          show={state}
-          title='其他'
-          height={IOS || filter ? 480 : 760}
-          onClose={setFalse}
-        >
-          {shows.origin && (
-            <OriginSetting navigation={navigation} filter={filter} setFalse={setFalse} />
-          )}
-          {shows.engine && (
-            <TranslateEngine
-              filter={filter}
-              onScrollIntoViewIfNeeded={handleScrollIntoViewIfNeeded}
-            />
-          )}
-          {!IOS && shows.katakana && <AppKatakana filter={filter} />}
-          {shows.cnFirst && systemStore.setting.katakana && <CnFirst filter={filter} sub />}
-          {shows.webhook && <Webhook navigation={navigation} filter={filter} setFalse={setFalse} />}
-        </ActionSheet>
-      </>
-    )
-  })
+  return (
+    <>
+      <ItemSetting arrow highlight filter={filter} onPress={setTrue} {...TEXTS.other}>
+        <Heatmap id='设置.切换' title='片假名终结者' />
+      </ItemSetting>
+      <ActionSheet
+        forwardRef={handleForwardRef}
+        show={state}
+        title={TEXTS.other.hd}
+        height={IOS || filter ? 480 : 760}
+        onClose={setFalse}
+      >
+        {shows.origin && (
+          <OriginSetting navigation={navigation} filter={filter} setFalse={setFalse} />
+        )}
+        {shows.engine && (
+          <TranslateEngine
+            filter={filter}
+            onScrollIntoViewIfNeeded={handleScrollIntoViewIfNeeded}
+          />
+        )}
+        {!IOS && shows.katakana && <AppKatakana filter={filter} />}
+        {shows.cnFirst && systemStore.setting.katakana && <CnFirst filter={filter} sub />}
+        {shows.webhook && <Webhook navigation={navigation} filter={filter} setFalse={setFalse} />}
+      </ActionSheet>
+    </>
+  )
 }
 
-export default Katakana
+export default observer(Katakana)

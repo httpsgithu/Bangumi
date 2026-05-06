@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2022-07-18 10:03:21
  * @Last Modified by: czy0729
- * @Last Modified time: 2025-01-03 10:09:30
+ * @Last Modified time: 2026-05-05 22:29:59
  */
 import { rc } from '@utils/dev'
 import { COMPONENT as PARENT } from '../ds'
@@ -10,6 +10,10 @@ import { COMPONENT as PARENT } from '../ds'
 export const COMPONENT = rc(PARENT, 'Katakana')
 
 export const TEXTS = {
+  other: {
+    hd: '其他'
+    // information: '源头、翻译等'
+  },
   engine: {
     setting: {
       title: '翻译引擎',

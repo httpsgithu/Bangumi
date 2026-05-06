@@ -5,10 +5,10 @@
  * @Last Modified time: 2024-09-02 18:36:41
  */
 import React from 'react'
+import { observer } from 'mobx-react'
 import { Flex, Image, Text } from '@components'
 import { _, userStore } from '@stores'
 import { open } from '@utils'
-import { ob } from '@utils/decorators'
 import { styles } from '../../styles'
 
 function Section4() {
@@ -68,4 +68,4 @@ function Section4() {
   )
 }
 
-export default ob(Section4)
+export default observer(Section4)

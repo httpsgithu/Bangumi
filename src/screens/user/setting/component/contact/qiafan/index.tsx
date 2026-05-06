@@ -2,10 +2,10 @@
  * @Author: czy0729
  * @Date: 2024-04-23 20:52:32
  * @Last Modified by: czy0729
- * @Last Modified time: 2025-04-04 01:12:48
+ * @Last Modified time: 2026-05-05 22:08:12
  */
 import React from 'react'
-import { Heatmap } from '@components'
+import { Heatmap, Text } from '@components'
 import { ItemSetting } from '@_'
 import { systemStore, userStore } from '@stores'
 import { t } from '@utils/fetch'
@@ -31,7 +31,11 @@ function Qiafan({ navigation, filter }) {
         }
         informationType='success'
         filter={filter}
-        ft={TEXT_UPDATE_QIAFAN}
+        ft={
+          <Text type='sub' bold>
+            {TEXT_UPDATE_QIAFAN}
+          </Text>
+        }
         onPress={() => {
           t('设置.跳转', {
             to: 'Qiafan'

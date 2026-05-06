@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2023-02-14 03:18:33
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-05-05 21:48:29
+ * @Last Modified time: 2026-05-05 22:30:12
  */
 import { rc } from '@utils/dev'
 import { COMPONENT as PARENT } from '../ds'
@@ -12,6 +12,7 @@ export const COMPONENT = rc(PARENT, 'Blocks')
 export const TEXTS = {
   track: {
     hd: '追踪'
+    // information: '追踪他人吐槽评论、进度、小组回复'
   },
   comment: {
     hd: '追踪 TA 的评论 (条目)',

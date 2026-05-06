@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2022-07-18 07:07:21
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-04-01 05:35:14
+ * @Last Modified time: 2026-05-05 22:30:18
  */
 import { rc } from '@utils/dev'
 import {
@@ -26,6 +26,10 @@ export const width = Math.floor(IMG_WIDTH_SM / 1.7)
 export const height = Math.floor(IMG_HEIGHT_SM / 1.7)
 
 export const TEXTS = {
+  ui: {
+    hd: '画面'
+    // information: '字体、字号、封面样式、震动'
+  },
   font: {
     title: '字体',
     information: '开启后，系统将强制使用「思源幼圆」字体，以确保不同设备上的 UI 设计统一'

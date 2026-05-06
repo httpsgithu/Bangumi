@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2022-07-18 08:31:18
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-04-01 05:35:54
+ * @Last Modified time: 2026-05-05 22:30:30
  */
 import { _ } from '@stores'
 import { rc } from '@utils/dev'
@@ -22,6 +22,10 @@ export const IMG_WIDTH = Math.floor((_.window.contentWidth - 2 * _.sm) / 3)
 export const IMG_HEIGHT = Math.floor(IMG_WIDTH * 1.44)
 
 export const TEXTS = {
+  cdn: {
+    hd: '图片'
+    // information: '图片加速、渐出动画'
+  },
   cover: {
     setting: {
       title: '封面加速',

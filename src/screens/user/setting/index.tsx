@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2019-05-24 01:34:26
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-05-05 21:11:38
+ * @Last Modified time: 2026-05-06 00:17:22
  */
 import React from 'react'
 import { observer } from 'mobx-react'
@@ -32,7 +32,6 @@ import Tip from './component/tip'
 import Track from './component/track'
 import UI from './component/ui'
 import User from './component/user'
-import UserSetting from './component/user-setting'
 import Version from './component/version'
 import Zhinan from './component/zhinan'
 import Header from './header'
@@ -71,7 +70,6 @@ function Setting(props: NavigationProps<Params>) {
             <UI filter={filter} />
             <Custom filter={filter} />
             <CDN navigation={navigation} filter={filter} />
-            <Route filter={filter} />
             <Blocks navigation={navigation} filter={filter} />
             <Track navigation={navigation} filter={filter} open={open === 'Track'} />
             <Katakana navigation={navigation} filter={filter} />
@@ -79,14 +77,15 @@ function Setting(props: NavigationProps<Params>) {
 
           <Block title='module' onBlockRef={onBlockRef}>
             <Tip>模块</Tip>
-            <Home filter={filter} />
+            <Route filter={filter} />
             <Discovery filter={filter} open={open === 'Discovery'} />
             <Timeline filter={filter} />
+            <Home filter={filter} />
             <Rakuen navigation={navigation} filter={filter} />
             <User filter={filter} open={open === 'User'} />
-            <UserSetting navigation={navigation} filter={filter} />
-            <Subject filter={filter} open={open === 'Subject'} />
             <Tinygrail filter={filter} open={open === 'Tinygrail'} />
+            <Subject filter={filter} open={open === 'Subject'} />
+            {/* {userStore.isLogin && <UserSetting navigation={navigation} filter={filter} />} */}
           </Block>
 
           <Block>

@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2023-02-14 03:18:20
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-05-05 21:31:02
+ * @Last Modified time: 2026-05-05 22:26:11
  */
 import React from 'react'
 import { observer } from 'mobx-react'
@@ -37,11 +37,11 @@ function Track({
 
   return (
     <>
-      <ItemSetting hd='追踪' arrow highlight filter={filter} onPress={setTrue} />
+      <ItemSetting arrow highlight filter={filter} onPress={setTrue} {...TEXTS.track} />
       <ActionSheet
         contentContainerStyle={styles.container}
         show={state}
-        title='追踪'
+        title={TEXTS.track.hd}
         height={760}
         onClose={setFalse}
       >

@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2021-02-23 10:40:56
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-05-05 20:08:00
+ * @Last Modified time: 2026-05-06 01:41:12
  */
 import Crypto from '@utils/crypto'
 import { WEB } from '../device'
@@ -44,7 +44,7 @@ export const TEXT_UPDATE_TYPERANK = '2026-04-12'
 export const TEXT_UPDATE_NSFW = '2025-11-06'
 
 /** 开发者话语最后更新时间 */
-export const TEXT_UPDATE_QIAFAN = '2024-09'
+export const TEXT_UPDATE_QIAFAN = '2026-05'
 
 /** 找条目数目 */
 export const TEXT_TOTAL = {

@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2023-02-14 03:18:20
  * @Last Modified by: czy0729
- * @Last Modified time: 2024-04-23 05:34:12
+ * @Last Modified time: 2026-05-05 22:22:41
  */
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
@@ -37,8 +37,8 @@ function Blocks({ navigation, filter }: WithNavigation<WithFilterProps>) {
 
   return (
     <>
-      <ItemSetting hd='屏蔽' arrow highlight filter={filter} onPress={setTrue} />
-      <ActionSheet show={state} title='屏蔽' height={760} onClose={setFalse}>
+      <ItemSetting arrow highlight filter={filter} onPress={setTrue} {...TEXTS.blocks} />
+      <ActionSheet show={state} title={TEXTS.blocks.hd} height={760} onClose={setFalse}>
         <View style={styles.container}>
           <RakuenBlocks
             navigation={navigation}
