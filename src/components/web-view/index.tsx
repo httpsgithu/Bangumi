@@ -21,10 +21,37 @@ export const WebView = class WebViewComponent extends React.Component<any> {
 
   goBack = FROZEN_FN
 
+  messageToken = Math.random().toString(36).slice(2, 10)
+
+  injectedTokenScript = `(function(){
+    var __token='${this.messageToken}';
+    var __orig=window.ReactNativeWebView&&window.ReactNativeWebView.postMessage;
+    if(__orig){
+      window.ReactNativeWebView.postMessage=function(msg){
+        try{
+          var o=typeof msg==='string'?JSON.parse(msg):msg;
+          o.token=__token;
+          __orig(JSON.stringify(o));
+        }catch(e){__orig(msg)}
+      };
+    }
+  })();`
+
+  onMessage = (event: any) => {
+    const { onMessage } = this.props
+    if (!onMessage) return
+
+    try {
+      const { token } = JSON.parse(event.nativeEvent.data)
+      if (token !== this.messageToken) return
+      onMessage(event)
+    } catch (ex) {}
+  }
+
   render() {
     r(COMPONENT)
 
-    const { uri, ...other } = this.props as any
+    const { uri, onMessage, injectedJavaScriptBeforeContentLoaded, ...other } = this.props as any
     if (!uri) return null
 
     return (
@@ -40,6 +67,8 @@ export const WebView = class WebViewComponent extends React.Component<any> {
           useWebKit
           thirdPartyCookiesEnabled={false}
           source={{ uri }}
+          injectedJavaScriptBeforeContentLoaded={`${this.injectedTokenScript}${injectedJavaScriptBeforeContentLoaded || ''}`}
+          onMessage={this.onMessage}
           {...other}
         />
         <KeyboardSpacer />

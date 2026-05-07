@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2019-04-05 21:04:57
  * @Last Modified by: czy0729
- * @Last Modified time: 2025-12-10 22:42:47
+ * @Last Modified time: 2026-05-07 17:49:27
  */
 import { lazy } from 'react'
 
@@ -147,5 +147,4 @@ export const Share = lazy(() => import('./web-view/share'))
 export const Tips = lazy(() => import('./web-view/tips'))
 export const Versions = lazy(() => import('./web-view/versions'))
 export const WebBrowser = lazy(() => import('./web-view/web-browser'))
-export const WebView = lazy(() => import('./web-view'))
 export const Webhook = lazy(() => import('./web-view/webhook'))
