@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2019-06-02 14:42:28
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-01-15 20:52:17
+ * @Last Modified time: 2026-05-05 19:57:56
  */
 import { Platform } from 'react-native'
 import Constants from 'expo-constants'
@@ -28,6 +28,9 @@ export const RERENDER_NOT_SHOW = rerenderNotShow
 /** 打印组件 rerender 值变化 (开发用) */
 export const RERENDER_SHOW_DIFF = false
 
+/** 打印懒加载组件参数 (开发用) */
+export const INVIEW_SHOW = false
+
 /** 显示调试菜单按钮 (安卓、开发用) */
 export const ANDROID_DEV_MENU = true
 
@@ -45,7 +48,7 @@ const CONFIGS: Configs = {
   initialRouteParams: {
     // subjectId: 467461 // anime: 296870, music: 302514, book: 267358, game: 283730
     // topicId: 'group/438017' // group/366561
-    // userId: 950407 // 456208, 419012, 'lilyurey'
+    // userId: 'imagebuilder183' // 456208, 419012, 'lilyurey'
     // monoId: 'character/109775' // character/70323 person/5745
     // id: 55723902
     // ids: [72649, 59610, 59611, 72648, 72650, 72651, 72652, 74522, 75203, 75207]
