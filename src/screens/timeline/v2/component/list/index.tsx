@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2019-04-14 00:51:13
  * @Last Modified by: czy0729
- * @Last Modified time: 2026-01-31 14:39:57
+ * @Last Modified time: 2026-05-07 20:12:36
  */
 import React, { useCallback, useMemo } from 'react'
 import { observer } from 'mobx-react'
@@ -46,8 +46,7 @@ function List({ title }: Props) {
 
   const handleScroll = useCallback(
     (evt: ScrollEvent) => {
-      uiStore.closePopableSubject()
-      uiStore.closeLikesGrid()
+      uiStore.closeAll()
       $.onScroll(evt)
     },
     [$]

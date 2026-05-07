@@ -2,14 +2,14 @@
  * @Author: czy0729
  * @Date: 2020-06-03 09:53:54
  * @Last Modified by: czy0729
- * @Last Modified time: 2025-12-24 18:58:54
+ * @Last Modified time: 2026-05-07 20:13:15
  */
 import React, { useMemo } from 'react'
 import { View } from 'react-native'
 import { observer } from 'mobx-react'
 import { TabView } from '@components'
 import { BlurViewBottomTab, BlurViewRoot, BlurViewTab } from '@_'
-import { _, uiStore, useStore } from '@stores'
+import { _, useStore } from '@stores'
 import { useInsets } from '@utils/hooks'
 import { TABS } from '../../ds'
 import renderScene from './renderScene'
@@ -37,7 +37,6 @@ function Tab() {
         renderTabBar={renderTabBar}
         renderBackground={elBackground}
         renderScene={renderScene}
-        onSwipeStart={uiStore.closeAll}
         onIndexChange={$.onChange}
       />
       <View

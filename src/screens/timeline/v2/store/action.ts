@@ -2,10 +2,10 @@
  * @Author: czy0729
  * @Date: 2024-05-27 10:55:37
  * @Last Modified by: czy0729
- * @Last Modified time: 2024-05-27 10:56:23
+ * @Last Modified time: 2026-05-07 20:16:07
  */
 import type { ScrollToIndex } from '@components'
-import { timelineStore } from '@stores'
+import { timelineStore, uiStore } from '@stores'
 import { feedback, updateVisibleBottom } from '@utils'
 import { logger } from '@utils/dev'
 import { fetchHTML, t } from '@utils/fetch'
@@ -27,6 +27,8 @@ export default class Action extends Fetch {
 
   /** 标签页切换 */
   onChange = (page: number) => {
+    uiStore.closeAll()
+
     const renderedTabsIndex = [...this.state.renderedTabsIndex]
     if (!renderedTabsIndex.includes(page)) renderedTabsIndex.push(page)
     this.setState({
@@ -50,6 +52,8 @@ export default class Action extends Fetch {
   onSelectScope = (label: string) => {
     const scope = MODEL_TIMELINE_SCOPE.getValue<TimeLineScope>(label)
     if (scope === this.state.scope) return
+
+    uiStore.closeAll()
 
     this.setState({
       scope
