@@ -2,7 +2,7 @@
  * @Author: czy0729
  * @Date: 2022-12-06 06:14:19
  * @Last Modified by: czy0729
- * @Last Modified time: 2024-11-18 06:33:21
+ * @Last Modified time: 2026-05-07 17:42:34
  */
 import React from 'react'
 import { View } from 'react-native'
@@ -38,8 +38,10 @@ function Upload() {
             androidLayerType='software'
             javaScriptEnabled
             onMessage={event => {
-              const { data } = JSON.parse(event.nativeEvent.data)
-              $.onMessage(data)
+              try {
+                const { data } = JSON.parse(event.nativeEvent.data)
+                $.onMessage(data)
+              } catch {}
             }}
           />
         </View>
